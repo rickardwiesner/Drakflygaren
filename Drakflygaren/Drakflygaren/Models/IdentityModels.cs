@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace Drakflygaren.Models
 {
@@ -16,6 +17,8 @@ namespace Drakflygaren.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public virtual ICollection<FavoriteLocation> FavoriteLocations { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -29,5 +32,8 @@ namespace Drakflygaren.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<FavoriteLocation> FavoriteLocations { get; set; }
     }
 }

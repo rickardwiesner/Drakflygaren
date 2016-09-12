@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Platser";
+}
+
+<h2>@ViewBag.Title <span class="pull-right"><button id="toggle-between-list-and-map" class="btn btn-primary">Lista / Karta</button></span></h2>
+<a href="@Url.Action("Create")"><i class="fa fa-plus"></i> Lägg till</a>
+<hr />
+<div id="locations-list">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Namn</th>
+                <th>Stad</th>
+                <th>Väder</th>
+                <th>Vind</th>
+                <th>Favorit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var locationViewModel in Model)
+            {
+                <tr>
+                    <td>@locationViewModel.Location.Name</td>
+                    <td>@locationViewModel.Location.City</td>
+                    <td><i class="fa fa-sun-o"></i></td>
+                    <td>2 m/s</td>
+                    <td><a id="@locationViewModel.Location.Id" class="toggle-favorite"><i class="fa @Html.AttributeEncode(locationViewModel.Favorite ? "fa-star" : "fa-star-o") "></i></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="locations-map" class="hide-content">
+    <h3>Karta</h3>
+</div>
