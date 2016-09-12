@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Drakflygaren.Controllers
 {
-    public class PlacesController
+    public class PlacesController : Controller
     {
         public ActionResult Index()
         {
