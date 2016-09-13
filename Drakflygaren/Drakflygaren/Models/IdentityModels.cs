@@ -35,5 +35,21 @@ namespace Drakflygaren.Models
 
         public DbSet<Location> Locations { get; set; }
         public DbSet<FavoriteLocation> FavoriteLocations { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Topic> Topics { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            var locationEntity = modelBuilder.Entity<Location>();
+            var eventEntity = modelBuilder.Entity<Event>();
+            var commentEntity = modelBuilder.Entity<Comment>();
+            var topicEntity = modelBuilder.Entity<Topic>();
+            var forumEntity = modelBuilder.Entity<Forum>();
+
+            //Class Configuration by Code-first
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
