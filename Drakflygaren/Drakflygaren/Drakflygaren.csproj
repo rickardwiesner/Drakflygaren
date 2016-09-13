@@ -215,7 +215,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="Scripts\google-maps.custom.js" />
+    <Content Include="Scripts\google-maps.autocomplete.js" />
     <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

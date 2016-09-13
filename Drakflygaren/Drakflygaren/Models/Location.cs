@@ -18,6 +18,6 @@ namespace Drakflygaren.Models
         public string Latitude { get; set; }
 
         public string CreatorId { get; set; }
-        public ApplicationUser Creator { get; set; }
+        public virtual ApplicationUser Creator { get; set; }
     }
 }

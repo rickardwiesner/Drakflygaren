@@ -66,9 +66,9 @@ namespace Drakflygaren.Controllers
                 db.SaveChanges();
             }
 
-            if (!db.Users.Any(u => u.UserName == "admin"))
+            if (!db.Users.Any(u => u.UserName == "admin@drakflygaren.se"))
             {
-                var user = new ApplicationUser { UserName = "admin", Email = "admin@drakflygaren.se" };
+                var user = new ApplicationUser { UserName = "admin@drakflygaren.se", Email = "admin@drakflygaren.se" };
                 UserManager.Create(user, "dragonlord");
                 UserManager.AddToRole(user.Id, "Admin");
             }
