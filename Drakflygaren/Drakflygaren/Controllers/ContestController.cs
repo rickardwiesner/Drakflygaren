@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace Drakflygaren.Controllers
 {
-    public class TrialController : Controller
+    public class ContestController : Controller
     {
-        // GET: Trial
+        // GET: Contest
         public ActionResult Index()
         {
             return View();
