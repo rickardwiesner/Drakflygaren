@@ -1,0 +1,42 @@
+﻿@model Drakflygaren.ViewModels.LocationViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOP-hCNyiygNNOURvqXC4A9VssSMieFGo&libraries=places"></script>
+    <script src="~/Scripts/google-maps.autocomplete.js"></script>
+}
+
+<h2>Lägg till</h2>
+
+@using (Html.BeginForm("Create", "Locations", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Longitude, new { id = "longitude" })
+    @Html.HiddenFor(m => m.Latitude, new { id = "latitude" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Place, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(m => m.Place, new { htmlAttributes = new { id = "autocomplete", @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Place, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.City, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(m => m.City, new { htmlAttributes = new { id = "locality", @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { id = "route", @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Lägg till plats" class="btn btn-success form-control" />
+    </div>
+}
+

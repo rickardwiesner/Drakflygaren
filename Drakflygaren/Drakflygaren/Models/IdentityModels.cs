@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace Drakflygaren.Models
 {
@@ -16,6 +17,8 @@ namespace Drakflygaren.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public virtual ICollection<FavoriteLocation> FavoriteLocations { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -28,6 +31,26 @@ namespace Drakflygaren.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<FavoriteLocation> FavoriteLocations { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Topic> Topics { get; set; }
+        public DbSet<Forum> Forums { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            var locationEntity = modelBuilder.Entity<Location>();
+            var eventEntity = modelBuilder.Entity<Event>();
+            var commentEntity = modelBuilder.Entity<Comment>();
+            var topicEntity = modelBuilder.Entity<Topic>();
+            var forumEntity = modelBuilder.Entity<Forum>();
+
+            //Class Configuration by Code-first
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
