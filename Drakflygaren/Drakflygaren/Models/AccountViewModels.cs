@@ -70,13 +70,13 @@ namespace Drakflygaren.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0}ed måste innehålla minst {2} karaktärer", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0}et måste innehålla minst {2} karaktärer", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Bekräfta Lösenord")]
+        [Display(Name = "Bekräfta lösenord")]
         [Compare("Password", ErrorMessage = "Lösenorden stämmer inte överens")]
         public string ConfirmPassword { get; set; }
     }
