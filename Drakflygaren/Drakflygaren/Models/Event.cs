@@ -19,7 +19,8 @@ namespace Drakflygaren.Models
 
         [ForeignKey("LocationId")]
         public virtual Location Location { get; set; }
-        public virtual IList<ApplicationUser> Participants { get; set; }
+        public virtual IList<EventParticipant> Participants { get; set; }
+        public virtual IList<EventComment> EventComments { get; set; }
 
     }
 }

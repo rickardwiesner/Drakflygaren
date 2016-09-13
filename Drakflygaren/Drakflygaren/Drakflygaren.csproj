@@ -183,6 +183,10 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\EventAction.cs" />
+    <Compile Include="Models\EventComment.cs" />
+    <Compile Include="Models\EventLike.cs" />
+    <Compile Include="Models\EventParticipant.cs" />
     <Compile Include="Models\FavoriteLocation.cs" />
     <Compile Include="Models\Forum.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -212,6 +216,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="Scripts\google-maps.custom.js" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
