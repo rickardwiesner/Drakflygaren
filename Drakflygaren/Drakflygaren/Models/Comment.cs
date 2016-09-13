@@ -14,13 +14,13 @@ namespace Drakflygaren.Models
         //public string ImageCommentUrl { get; set; } //incase user wishes to comment with an image
 
         //Foreign keys
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int TopicId { get; set; }
 
 
         //Navigation properties
 
-        [ForeignKey("UserID")]
+        [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
 
         [ForeignKey("TopicId")]

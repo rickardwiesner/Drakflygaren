@@ -11,11 +11,10 @@ namespace Drakflygaren.Models
         public int TopicId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int NumberOfComments { get; set; }
         public DateTime CreatedOn { get; set; }
 
         //Foreign key
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         //Navigational Prop
 
