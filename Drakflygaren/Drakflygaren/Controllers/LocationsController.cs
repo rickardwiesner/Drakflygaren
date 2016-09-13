@@ -10,12 +10,14 @@ using System.Web.Mvc;
 
 namespace Drakflygaren.Controllers
 {
+    [Authorize]
     public class LocationsController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
 
+        [AllowAnonymous]
         public ActionResult Index()
-        {
+        {   
             var userId = User.Identity.GetUserId();
             var locationViewModels = new List<LocationViewModel>();
 
