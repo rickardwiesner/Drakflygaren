@@ -13,7 +13,10 @@
                 <th>Stad</th>
                 <th>Väder</th>
                 <th>Vind</th>
-                <th>Favorit</th>
+                @if (Request.IsAuthenticated)
+                {
+                    <th>Favorit</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -24,7 +27,10 @@
                     <td>@locationViewModel.Location.City</td>
                     <td><i class="fa fa-sun-o"></i></td>
                     <td>2 m/s</td>
-                    <td><a id="@locationViewModel.Location.Id" class="toggle-favorite"><i class="fa @Html.AttributeEncode(locationViewModel.Favorite ? "fa-star" : "fa-star-o") "></i></a></td>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <td><a id="@locationViewModel.Location.Id" class="toggle-favorite"><i class="fa @Html.AttributeEncode(locationViewModel.Favorite ? "fa-star" : "fa-star-o") "></i></a></td>
+                    }
                 </tr>
             }
         </tbody>

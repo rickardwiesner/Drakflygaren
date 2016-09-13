@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Drakflygaren.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Drakflygaren.Controllers
 {
@@ -57,6 +58,21 @@ namespace Drakflygaren.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            var db = new ApplicationDbContext();
+
+            if (!db.Roles.Any(r => r.Name == "Admin"))
+            {
+                db.Roles.Add(new IdentityRole { Name = "Admin" });
+                db.SaveChanges();
+            }
+
+            if (!db.Users.Any(u => u.UserName == "admin"))
+            {
+                var user = new ApplicationUser { UserName = "admin", Email = "admin@drakflygaren.se" };
+                UserManager.Create(user, "dragonlord");
+                UserManager.AddToRole(user.Id, "Admin");
+            }
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
