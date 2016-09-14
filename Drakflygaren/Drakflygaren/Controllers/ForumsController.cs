@@ -15,9 +15,9 @@ namespace Drakflygaren.Controllers
         // GET: Forums
         public ActionResult Index()
         {
-            var forums = db.Forums.ToList();
+            var topics = db.Topics.ToList();
             
-            return View(forums);
+            return View(topics);
         }
 
         //public ActionResult Topics(int forumId)
