@@ -164,22 +164,33 @@ namespace Drakflygaren.Controllers
         }
 
         [HttpPost]
-        public void RateLocation(int locationId, int rating)
+        public JsonResult RateLocation(int locationId, int rating)
         {
             var userId = User.Identity.GetUserId();
-            var locationRating = db.LocationRatings.FirstOrDefault(lr => lr.LocationId == locationId && lr.UserId == userId);
+            var userLocationRating = db.LocationRatings.FirstOrDefault(lr => lr.LocationId == locationId && lr.UserId == userId);
 
-            if (locationRating == null)
+            if (userLocationRating == null)
             {
                 db.LocationRatings.Add(new LocationRating { LocationId = locationId, UserId = userId, Rating = rating });
             }
 
             else
             {
-                locationRating.Rating = rating;
+                if (userLocationRating.Rating == rating)
+                {
+                    db.LocationRatings.Remove(userLocationRating);
+                }
+
+                else
+                {
+                    userLocationRating.Rating = rating;
+                }
             }
 
             db.SaveChanges();
+            var locationRating = db.LocationRatings.Where(lr => lr.LocationId == locationId).Select(lr => lr.Rating).DefaultIfEmpty(0).Average();
+
+            return Json(locationRating);
         }
 
         protected override void Dispose(bool disposing)

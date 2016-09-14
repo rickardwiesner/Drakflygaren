@@ -34,22 +34,32 @@
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log('Something went wrong!\nStatus: ' + textStatus + "\nError: " + errorThrown);
             },
-            success: function () {
+            success: function (data) {
                 var elements = $('[data-id=' + locationId + '] .rate-location');
-                elements.each(function () {
-                    var element = $(this);
-                    var icon = element.children('i.fa')
-                    if (element.attr('data-rating') <= rating) {
-                        if (icon.hasClass('fa-star-o')) {
-                            icon.toggleClass('fa-star fa-star-o')
+                var currentStars = elements.children('i.fa-star');
+                if (currentStars.length == rating) {
+                    currentStars.each(function () {
+                        var currentStar = $(this);
+                        currentStar.toggleClass('fa-star fa-star-o');
+                    });
+                }
+                else {
+                    elements.each(function () {
+                        var element = $(this);
+                        var icon = element.children('i.fa')
+                        if (element.attr('data-rating') <= rating) {
+                            if (icon.hasClass('fa-star-o')) {
+                                icon.toggleClass('fa-star fa-star-o')
+                            }
                         }
-                    }
-                    else {
-                        if (icon.hasClass('fa-star')) {
-                            icon.toggleClass('fa-star fa-star-o')
+                        else {
+                            if (icon.hasClass('fa-star')) {
+                                icon.toggleClass('fa-star fa-star-o')
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                $('[data-id=' + locationId + '] .location-rating').html(data);
             }
         });
     });
