@@ -5,9 +5,9 @@ using System.Web;
 
 namespace Drakflygaren.Models
 {
-    public class Forum : Topic
+    public class EventCategory
     {
-        public int ForumId { get; set; }
-        public virtual IList<Topic> Topics { get; set; }   
+        public int Id { get; set; }
+        public string CategoryName { get; set; }
     }
 }

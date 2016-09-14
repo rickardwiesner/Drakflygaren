@@ -9,5 +9,6 @@ namespace Drakflygaren.Models
     {
         public int Id { get; set; }
         public string Comment { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

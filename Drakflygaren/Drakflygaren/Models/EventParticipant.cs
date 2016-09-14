@@ -5,6 +5,7 @@ using System.Web;
 
 namespace Drakflygaren.Models
 {
+
     public class EventParticipant : EventAction
     {
         public int Id { get; set; }

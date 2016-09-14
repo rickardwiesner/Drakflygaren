@@ -15,16 +15,16 @@ namespace Drakflygaren.Controllers
         // GET: Forums
         public ActionResult Index()
         {
-            var forums = db.Forums.ToList();
+            //var forums = db.Forums.ToList();
             
-            return View(forums);
+            return View(/*forums*/);
         }
 
         public ActionResult Topics(int forumId)
         {
-            var forum = db.Forums.Find(forumId);
+            //var forum = db.Forums.Find(forumId);
 
-            return View(forum);
+            return View(/*forum*/);
         }
 
 

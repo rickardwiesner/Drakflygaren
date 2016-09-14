@@ -13,12 +13,21 @@ namespace Drakflygaren.Models
         public DateTime EventDateTime { get; set; }
         public string ImageUrl { get; set; }
         public string Description { get; set; }
+
         public int LocationId { get; set; }
+        public int EventCategoryId { get; set; }
+
+        public int CreatorId { get; set; }
+        public virtual ApplicationUser Creator { get; set; }
 
         //Navigation Properties
 
         [ForeignKey("LocationId")]
         public virtual Location Location { get; set; }
+
+        [ForeignKey("EventCategoryId")]
+        public virtual EventCategory Category { get; set; }
+
         public virtual IList<EventParticipant> Participants { get; set; }
         public virtual IList<EventComment> EventComments { get; set; }
 

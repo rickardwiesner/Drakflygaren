@@ -5,10 +5,9 @@ using System.Web;
 
 namespace Drakflygaren.Models
 {
-
-    public class FavoriteLocation : LocationAction
+    public enum ReportCategory
     {
-        public int Id { get; set; }
+        Rasistiskt,
+        Stötande
     }
-
 }

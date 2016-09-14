@@ -6,6 +6,7 @@ using System.Web;
 
 namespace Drakflygaren.Models
 {
+
     public class Comment
     {
         public int CommentId { get; set; }

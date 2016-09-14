@@ -5,10 +5,10 @@ using System.Web;
 
 namespace Drakflygaren.Models
 {
-
-    public class FavoriteLocation : LocationAction
+    public class LocationRating : LocationAction
     {
         public int Id { get; set; }
-    }
 
+        public int Rating { get; set; }
+    }
 }
