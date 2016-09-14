@@ -17,31 +17,29 @@
             @Html.EditorFor(m => m.Topic, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(m => m.Topic, "", new { @class = "text-danger" })
         </div>
-        </div>
+    </div>
 }
-
 <div class="form-group">
     @Html.LabelFor(m => m.User, htmlAttributes: new { @class = "control-label" })
     <div class="col-md-10">
         @Html.EditorFor(m => m.User, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(m => m.User, "", new { @class = "text-danger" })
     </div>
-    </div>
-
+</div>
 <div class="form-group">
     @Html.LabelFor(m => m.Text, htmlAttributes: new { @class = "control-label" })
     <div class="col-md-10">
         @Html.EditorFor(m => m.Text, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(m => m.Text, "", new { @class = "text-danger" })
     </div>
-    </div>
+</div>
 <div class="form-group">
     @Html.LabelFor(m => m.CommentDateTime, htmlAttributes: new { @class = "control-label" })
     <div class="col-md-10">
         @Html.EditorFor(m => m.CommentDateTime, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(m => m.CommentDateTime, "", new { @class = "text-danger" })
-        </div>
     </div>
+</div>
 
 
 <div class="form-group">
