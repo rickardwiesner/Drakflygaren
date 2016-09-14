@@ -39,5 +39,6 @@ namespace Drakflygaren.Models
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Topic> Topics { get; set; }
 
+        public System.Data.Entity.DbSet<Drakflygaren.Models.EventCategory> EventCategories { get; set; }
     }
 }
