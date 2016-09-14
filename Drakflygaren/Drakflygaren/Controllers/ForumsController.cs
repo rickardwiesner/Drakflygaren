@@ -20,20 +20,20 @@ namespace Drakflygaren.Controllers
             return View(forums);
         }
 
-        public ActionResult Topics(int forumId)
-        {
-            var forum = db.Forums.Find(forumId);
+        //public ActionResult Topics(int forumId)
+        //{
+        //    var forum = db.Forums.Find(forumId);
 
-            return View(forum);
-        }
+        //    return View(forum);
+        //}
 
 
-        public ActionResult Comments(int topicId)
-        {
-            var topic = db.Topics.Find(topicId);
+        //public ActionResult Comments(int topicId)
+        //{
+        //    var topic = db.Topics.Find(topicId);
 
-            return View(topic);
-        }
+        //    return View(topic);
+        //}
 
 
 
