@@ -4,4 +4,3 @@
         listAndMap.toggleClass('hide-content');
     });
 })();
-

@@ -1,9 +1,11 @@
 ﻿#locations-list.hide-content {
     display: none;
+
 }
 
-#map_canvas.hide-content {
-    display: none;
+#locations-map.hide-content {
+    height: 0;
+    visibility: hidden;
 }
 
 #map_wrapper {
