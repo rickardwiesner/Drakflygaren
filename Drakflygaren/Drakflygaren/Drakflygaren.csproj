@@ -193,10 +193,10 @@
     <Compile Include="Models\EventComment.cs" />
     <Compile Include="Models\EventLike.cs" />
     <Compile Include="Models\EventParticipant.cs" />
-    <Compile Include="Models\FavoriteLocation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\LocationAction.cs" />
+    <Compile Include="Models\LocationFavorite.cs" />
     <Compile Include="Models\LocationRating.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Report.cs" />
@@ -295,6 +295,10 @@
     <Content Include="Views\Events\Details.cshtml" />
     <Content Include="Views\Events\Edit.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Locations\_LocationFavorites.cshtml" />
+    <Content Include="Views\Locations\Details.cshtml" />
+    <Content Include="Views\Locations\Delete.cshtml" />
+    <Content Include="Views\Locations\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

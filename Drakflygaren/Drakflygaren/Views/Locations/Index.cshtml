@@ -4,45 +4,76 @@
     ViewBag.Title = "Platser";
 }
 
-<h2>@ViewBag.Title <span class="pull-right"><button id="toggle-between-list-and-map" class="btn btn-primary">Lista / Karta</button></span></h2>
-<a href="@Url.Action("Create")"><i class="fa fa-plus"></i> Lägg till</a>
-<hr />
-<div id="locations-list">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Namn</th>
-                <th>Stad</th>
-                <th>Väder</th>
-                <th>Vind</th>
-                @if (Request.IsAuthenticated)
-                {
-                    <th>Favorit</th>
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var locationViewModel in Model)
-            {
-                <tr>
-                    <td>@locationViewModel.Location.Name</td>
-                    <td>@locationViewModel.Location.City</td>
-                    <td><i class="fa fa-sun-o"></i></td>
-                    <td>2 m/s</td>
-                    @if (Request.IsAuthenticated)
+<div class="row">
+    <div class="@Html.AttributeEncode(Request.IsAuthenticated ? "col-md-9" : "col-md-12" )">
+        <h2>@ViewBag.Title <span class="pull-right"><button id="toggle-between-list-and-map" class="btn btn-primary">Lista / Karta</button></span></h2>
+        <a href="@Url.Action("Create")"><i class="fa fa-plus"></i> Lägg till</a>
+        <hr />
+        <div id="locations-list">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Namn</th>
+                        <th>Stad</th>
+                        <th>Väder</th>
+                        <th>Vind</th>
+                        <th>Betyg</th>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <th>Betygsätt</th>
+                            <th>Favorit</th>
+                        }
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var locationViewModel in Model)
                     {
-                        <td><a id="@locationViewModel.Location.Id" class="toggle-favorite"><i class="fa @Html.AttributeEncode(locationViewModel.Favorite ? "fa-star" : "fa-star-o") "></i></a></td>
+                        <tr data-id="@locationViewModel.Location.Id">
+                            <td>@locationViewModel.Location.Name</td>
+                            <td>@locationViewModel.Location.City</td>
+                            <td><i class="fa fa-sun-o text-warning"></i></td>
+                            <td>2 m/s</td>
+                            <td>@locationViewModel.Rating</td>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <td>
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <a data-rating="@i" class="rate-location"><i class="fa @Html.AttributeEncode(locationViewModel.UserRating >= i ? "fa-star" : "fa-star-o") text-warning"></i></a>
+                                    }
+                                </td>
+                                <td><a class="toggle-favorite"><i class="fa @Html.AttributeEncode(locationViewModel.Favorite ? "fa-heart" : "fa-heart-o") text-danger"></i></a></td>
+                            }
+                            <td>
+                                <a href="@Url.Action("Details", new { locationId = locationViewModel.Location.Id })"><i class="fa fa-eye"></i></a>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a href="@Url.Action("Edit", new { locationId = locationViewModel.Location.Id })"><i class="fa fa-edit"></i></a>
+                                    <a href="@Url.Action("Delete", new { locationId = locationViewModel.Location.Id })"><i class="fa fa-trash-o"></i></a>
+                                }
+                            </td>
+                        </tr>
                     }
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+                </tbody>
+            </table>
+        </div>
 
-<div id="locations-map" class="hide-content">
-    <div id="map_wrapper">
-        <div id="map_canvas" class="mapping"></div>
+        <div id="locations-map" class="hide-content">
+            <div id="map_wrapper">
+                <div id="map_canvas" class="mapping"></div>
+            </div>
+        </div>
     </div>
+    @if (Request.IsAuthenticated)
+    {
+        <div class="col-md-3">
+            <h2>Favoriter</h2>
+            <div id="favorite-locations">
+                @Html.Action("LocationFavorites")
+            </div>
+        </div>
+    }
 </div>
 
 @section scripts {

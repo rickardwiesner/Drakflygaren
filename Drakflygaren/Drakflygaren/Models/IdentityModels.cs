@@ -17,8 +17,6 @@ namespace Drakflygaren.Models
             // Add custom user claims here
             return userIdentity;
         }
-
-        public virtual ICollection<FavoriteLocation> FavoriteLocations { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -34,11 +32,11 @@ namespace Drakflygaren.Models
         }
 
         public DbSet<Location> Locations { get; set; }
-        public DbSet<FavoriteLocation> FavoriteLocations { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Topic> Topics { get; set; }
-
+        public DbSet<LocationRating> LocationRatings { get; set; }
+        public DbSet<LocationFavorite> LocationFavorites { get; set; }
         public System.Data.Entity.DbSet<Drakflygaren.Models.EventCategory> EventCategories { get; set; }
     }
 }
