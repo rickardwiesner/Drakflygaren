@@ -171,7 +171,6 @@
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\ContestController.cs" />
     <Compile Include="Controllers\EventController.cs" />
-    <Compile Include="Controllers\ForumsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />

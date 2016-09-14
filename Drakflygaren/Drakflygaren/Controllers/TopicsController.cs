@@ -37,7 +37,9 @@ namespace Drakflygaren.Controllers
             return View(topic);
         }
 
-        // GET: Topics/Create
+
+
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -55,8 +57,8 @@ namespace Drakflygaren.Controllers
                 var userId = User.Identity.GetUserId();
                 topic.CreatedOn = DateTime.Now;
                 topic.UserId = userId;
-                
-                    
+
+
                 db.Topics.Add(topic);
                 db.SaveChanges();
                 return RedirectToAction("Index");
