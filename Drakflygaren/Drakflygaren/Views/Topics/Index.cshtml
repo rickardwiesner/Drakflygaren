@@ -12,9 +12,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedBy.Email)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
@@ -23,16 +20,22 @@
         <th>
             @Html.DisplayNameFor(model => model.CreatedOn)
         </th>
-        <th></th>
+        <th>
+            Kommentarer
+        </th>
+        <th>
+            Skapad av
+        </th>
+        @if (User.IsInRole("Admin"))
+        {
+            <th></th>
+        } 
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.ActionLink(item.Name, "Details", new { id = item.TopicId })          
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
@@ -41,10 +44,20 @@
             @Html.DisplayFor(modelItem => item.CreatedOn)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TopicId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TopicId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TopicId })
+            @item.Comments.Count
+            @*@Html.DisplayFor(modelItem => item.Comments.Count)*@
         </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy.UserName)
+        </td>
+        @if (User.IsInRole("Admin"))
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.TopicId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.TopicId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.TopicId })
+            </td>
+        }
     </tr>
 }
 

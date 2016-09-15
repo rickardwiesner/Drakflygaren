@@ -17,8 +17,8 @@ namespace Drakflygaren.Controllers
         // GET: Comments
         public ActionResult Index()
         {
-            var comments = db.Comments.Include(c => c.Topic).Include(c => c.User);
-            return View(comments.ToList());
+            //var comments = db.TopicComments.Include(c => c.Topic).Include(c => c.User);
+            return View(db.TopicComments.ToList());
         }
 
         // GET: Comments/Details/5
@@ -28,15 +28,15 @@ namespace Drakflygaren.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
+            TopicComment topicComment = db.TopicComments.Find(id);
+            if (topicComment == null)
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            return View(topicComment);
         }
 
-        // GET: Comments/Create
+        
         public ActionResult Create()
         {
             return View();
@@ -47,16 +47,16 @@ namespace Drakflygaren.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CommentId,Text,CommentDateTime,UserId,TopicId")] Comment comment)
+        public ActionResult Create([Bind(Include = "CommentId,Text,CommentDateTime,UserId,TopicId")] TopicComment topicComment)
         {
             if (ModelState.IsValid)
             {
-                db.Comments.Add(comment);
+                db.TopicComments.Add(topicComment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(comment);
+            return View(topicComment);
         }
 
         // GET: Comments/Edit/5
@@ -66,12 +66,12 @@ namespace Drakflygaren.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
+            TopicComment topicComment = db.TopicComments.Find(id);
+            if (topicComment == null)
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            return View(topicComment);
         }
 
         // POST: Comments/Edit/5
@@ -79,15 +79,15 @@ namespace Drakflygaren.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CommentId,Text,CommentDateTime,UserId,TopicId")] Comment comment)
+        public ActionResult Edit([Bind(Include = "CommentId,Text,CommentDateTime,UserId,TopicId")] TopicComment topicComment)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(comment).State = EntityState.Modified;
+                db.Entry(topicComment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(comment);
+            return View(topicComment);
         }
 
         // GET: Comments/Delete/5
@@ -97,12 +97,12 @@ namespace Drakflygaren.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
+            TopicComment topicComment = db.TopicComments.Find(id);
+            if (topicComment == null)
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            return View(topicComment);
         }
 
         // POST: Comments/Delete/5
@@ -110,8 +110,8 @@ namespace Drakflygaren.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Comment comment = db.Comments.Find(id);
-            db.Comments.Remove(comment);
+            TopicComment topicComment = db.TopicComments.Find(id);
+            db.TopicComments.Remove(topicComment);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

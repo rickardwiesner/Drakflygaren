@@ -10,10 +10,16 @@ namespace Drakflygaren.ViewModels
 {
     public class LocationViewModel
     {
+        //Index
         public Location Location { get; set; }
 
         public bool Favorite { get; set; }
 
+        public double Rating { get; set; }
+
+        public int UserRating { get; set; }
+
+        //Create
         [Required]
         [Display(Name = "Namn")]
         public string Name { get; set; }

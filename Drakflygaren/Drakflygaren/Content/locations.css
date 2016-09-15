@@ -1,6 +1,5 @@
 ﻿#locations-list.hide-content {
     display: none;
-
 }
 
 #locations-map.hide-content {
@@ -15,4 +14,8 @@
 #map_canvas {
     width: 100%;
     height: 100%;
+}
+
+td a {
+    cursor: pointer;
 }

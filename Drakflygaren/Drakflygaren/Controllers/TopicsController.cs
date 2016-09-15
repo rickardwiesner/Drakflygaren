@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Drakflygaren.Models;
 using Microsoft.AspNet.Identity;
+using Drakflygaren.ViewModels;
 
 namespace Drakflygaren.Controllers
 {
@@ -34,8 +35,36 @@ namespace Drakflygaren.Controllers
             {
                 return HttpNotFound();
             }
-            return View(topic);
+
+            var userId = User.Identity.GetUserId();
+
+            if (!db.TopicViews.Any(tv => tv.UserId == userId && tv.TopicId == topic.TopicId) && userId != null)
+            {
+                db.TopicViews.Add(new TopicView { TopicId = topic.TopicId, UserId = userId });
+                db.SaveChanges();
+            }
+
+            return View(new TopicViewModel { Topic = topic});
         }
+        [HttpPost]
+        public ActionResult SendPost(TopicViewModel model)
+        {
+            var userId = User.Identity.GetUserId();
+            db.TopicComments.Add(new TopicComment {
+                Text = model.Text,
+                TopicId = model.Topic.TopicId,
+                UserId = userId,
+                CommentDateTime = DateTime.Now,
+                
+               
+            });
+
+            db.SaveChanges();
+            return RedirectToAction("Details", new {id = model.Topic.TopicId});
+
+            
+        }
+
 
 
 

@@ -15,7 +15,7 @@ namespace Drakflygaren.Models
         public virtual ApplicationUser Reporter { get; set; }
 
         public int CommentId { get; set; }
-        public virtual Comment CommentToReport { get; set; }
+        public virtual TopicComment CommentToReport { get; set; }
 
         public ReportCategory Category { get; set; }
     }

@@ -54,15 +54,15 @@ namespace Drakflygaren
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "323943077957566",
+               appSecret: "88789da72653b256982d93f06ee3c5af");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "69417065675-oqm6gqjk3nmdl96scn0dmngq22qm1r4b.apps.googleusercontent.com",
+                ClientSecret = "hgmZgOdYRUIKmsyPK634h8Es"
+            });
         }
     }
 }
