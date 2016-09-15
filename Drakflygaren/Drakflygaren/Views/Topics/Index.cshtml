@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Drakflygaren.Models.Topic>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Forum";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Skapa ny tråd", "Create")
 </p>
 <table class="table">
     <tr>
@@ -22,6 +22,9 @@
         </th>
         <th>
             Kommentarer
+        </th>
+        <th>
+            Visningar
         </th>
         <th>
             Skapad av
@@ -44,8 +47,10 @@
             @Html.DisplayFor(modelItem => item.CreatedOn)
         </td>
         <td>
-            @item.Comments.Count
-            @*@Html.DisplayFor(modelItem => item.Comments.Count)*@
+            @item.Comments.Count 
+        </td>
+        <td>
+            @item.Views.Count
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedBy.UserName)

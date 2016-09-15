@@ -1,11 +1,8 @@
 ﻿@model Drakflygaren.Models.Event
-
 @{
     ViewBag.Title = "Details";
 }
-
 <h2>Details</h2>
-
 <div>
     <h4>Event</h4>
     <hr />
@@ -13,59 +10,45 @@
         <dt>
             @Html.DisplayNameFor(model => model.Category.CategoryName)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Category.CategoryName)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Location.Name)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Location.Name)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.EventDateTime)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.EventDateTime)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.ImageUrl)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.ImageUrl)
+            <img src="@Url.Content(ViewBag.ImageUrl)" class="img-responsive" />
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.CreatorId)
+            @Html.DisplayNameFor(model => model.Creator.UserName)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.CreatorId)
+            @Html.DisplayFor(model => model.Creator.UserName)
         </dd>
-
     </dl>
 </div>
 <p>
