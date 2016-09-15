@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -9,8 +10,14 @@ namespace Drakflygaren.Models
     public class Topic
     {
         public int TopicId { get; set; }
+
+        [Display(Name = "Namn")]
         public string Name { get; set; }
+
+        [Display(Name = "Beskrivning")]
         public string Description { get; set; }
+
+        [Display(Name = "Skapad")]
         public DateTime CreatedOn { get; set; }
 
         //Foreign key

@@ -38,6 +38,6 @@ namespace Drakflygaren.Models
         public DbSet<Topic> Topics { get; set; }
         public DbSet<LocationRating> LocationRatings { get; set; }
         public DbSet<LocationFavorite> LocationFavorites { get; set; }
-        public System.Data.Entity.DbSet<Drakflygaren.Models.EventCategory> EventCategories { get; set; }
+        public DbSet<EventCategory> EventCategories { get; set; }
     }
 }

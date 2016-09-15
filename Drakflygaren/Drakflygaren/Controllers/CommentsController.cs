@@ -17,8 +17,8 @@ namespace Drakflygaren.Controllers
         // GET: Comments
         public ActionResult Index()
         {
-            var comments = db.TopicComments.Include(c => c.Topic).Include(c => c.User);
-            return View(comments.ToList());
+            //var comments = db.TopicComments.Include(c => c.Topic).Include(c => c.User);
+            return View(db.TopicComments.ToList());
         }
 
         // GET: Comments/Details/5
@@ -36,7 +36,7 @@ namespace Drakflygaren.Controllers
             return View(topicComment);
         }
 
-        // GET: Comments/Create
+        
         public ActionResult Create()
         {
             return View();
