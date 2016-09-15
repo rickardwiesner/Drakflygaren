@@ -30,6 +30,6 @@ namespace Drakflygaren.Models
 
         public virtual IList<EventParticipant> Participants { get; set; }
         public virtual IList<EventComment> EventComments { get; set; }
-
+        public virtual IList<EventLike> EventLikes { get; set; }
     }
 }

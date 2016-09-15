@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Drakflygaren.Models;
 using Microsoft.AspNet.Identity;
+using Drakflygaren.ViewModels;
 
 namespace Drakflygaren.Controllers
 {
@@ -19,8 +20,41 @@ namespace Drakflygaren.Controllers
         public ActionResult Index()
         {
             //   var events = db.Events.Include(@ => @.Category).Include(@ => @.Location);
-            var events = db.Events.ToList();
-            return View(events.ToList());
+            var userId = User.Identity.GetUserId();
+            var eventViewModels = new List<EventViewModel>();
+
+            foreach (var @event in db.Events.ToList())
+            {
+                eventViewModels.Add(new EventViewModel
+                {
+                    Event = @event,
+                    Liked = db.EventLikes.Any(el => el.EventId == @event.EventId && el.UserId == userId)
+                });
+            }
+
+            return View(eventViewModels);
+        }
+
+        [HttpPost]
+        public int EventLike(int eventId)
+        {
+            var userId = User.Identity.GetUserId();
+            var userEventLike = db.EventLikes.FirstOrDefault(el => el.EventId == eventId && el.UserId == userId);
+
+            if (userEventLike == null)
+            {
+                db.EventLikes.Add(new EventLike { UserId = userId, EventId = eventId });
+            }
+
+            else
+            {
+                db.EventLikes.Remove(userEventLike);
+            }
+
+            db.SaveChanges();
+
+            var eventLikesCount = db.Events.Find(eventId).EventLikes.Count;
+            return eventLikesCount;
         }
 
         // GET: Events/Details/5

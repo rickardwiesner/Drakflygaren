@@ -39,5 +39,7 @@ namespace Drakflygaren.Models
         public DbSet<LocationRating> LocationRatings { get; set; }
         public DbSet<LocationFavorite> LocationFavorites { get; set; }
         public DbSet<EventCategory> EventCategories { get; set; }
+        public DbSet<EventLike> EventLikes { get; set; }
+        public DbSet<EventComment> EventComments { get; set; }
     }
 }

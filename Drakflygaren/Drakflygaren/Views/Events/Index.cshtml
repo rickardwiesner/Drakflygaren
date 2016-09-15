@@ -1,8 +1,13 @@
-﻿@model IEnumerable<Drakflygaren.Models.Event>
+﻿@model IEnumerable<Drakflygaren.ViewModels.EventViewModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Event";
 }
-<h2>Index</h2>
+
+@section scripts {
+    <script src="~/Scripts/events.js"></script>
+}
+
+<h2>@ViewBag.Title</h2>
 @Html.ActionLink("Skapa nytt event", "Create")
 <table class="table table-striped">
     <thead>
@@ -12,17 +17,21 @@
             <th>Beskrivning</th>
             <th>Plats</th>
             <th>När?</th>
+            <th>Gilla</th>
+            <th>Gillare</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var eventViewModel in Model)
         {
-            <tr>
-                <td>@Html.ActionLink(item.Name, "Details", new { id = item.EventId })</td>
-                <td>@item.Category.CategoryName</td>
-                <td>@item.Description</td>
-                <td>@item.Location.Name</td>
-                <td>@item.EventDateTime</td>
+            <tr data-id="@eventViewModel.Event.EventId">
+                <td>@Html.ActionLink(eventViewModel.Event.Name, "Details", new { id = eventViewModel.Event.EventId })</td>
+                <td>@eventViewModel.Event.Category.CategoryName</td>
+                <td>@eventViewModel.Event.Description</td>
+                <td>@eventViewModel.Event.Location.Name</td>
+                <td>@eventViewModel.Event.EventDateTime</td>
+                <td><a class="like-event-button"><i class="fa @Html.AttributeEncode(eventViewModel.Liked ? "fa-thumbs-up" : "fa-thumbs-o-up")"></i></a></td>
+                <td class="event-likes-count">@eventViewModel.Event.EventLikes.Count</td>
             </tr>
         }
     </tbody>
