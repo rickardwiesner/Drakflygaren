@@ -208,6 +208,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\LocationViewModel.cs" />
+    <Compile Include="ViewModels\TopicViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
