@@ -33,7 +33,8 @@ namespace Drakflygaren.Models
 
         public DbSet<Location> Locations { get; set; }
         public DbSet<Event> Events { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<TopicComment> TopicComments { get; set; }
+        public DbSet<TopicView> TopicViews { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<LocationRating> LocationRatings { get; set; }
         public DbSet<LocationFavorite> LocationFavorites { get; set; }

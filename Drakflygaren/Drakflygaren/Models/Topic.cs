@@ -20,7 +20,7 @@ namespace Drakflygaren.Models
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser CreatedBy { get; set; }
-        public virtual IList<Comment> Comments { get; set; }
-
+        public virtual IList<TopicComment> Comments { get; set; }
+        public virtual IList<TopicView> Views { get; set; }
     }
 }
