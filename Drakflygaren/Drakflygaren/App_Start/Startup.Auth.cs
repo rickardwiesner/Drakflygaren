@@ -60,8 +60,8 @@ namespace Drakflygaren
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "1036417942515-r3f6hbi3h69vkg2bui65kpn065h7hf4d.apps.googleusercontent.com",
-                ClientSecret = "PXJOlhezTUmkziQoWk0tLDhB"
+                ClientId = "69417065675-oqm6gqjk3nmdl96scn0dmngq22qm1r4b.apps.googleusercontent.com",
+                ClientSecret = "hgmZgOdYRUIKmsyPK634h8Es"
             });
         }
     }
