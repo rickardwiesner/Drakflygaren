@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Drakflygaren.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Drakflygaren.Controllers
 {
@@ -34,6 +35,7 @@ namespace Drakflygaren.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ImageUrl = @event.ImageUrl;
             return View(@event);
         }
 
@@ -50,18 +52,21 @@ namespace Drakflygaren.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventId,Name,EventDateTime,ImageUrl,Description,LocationId,EventCategoryId/*CreatorId*/")] Event @event)
+        public ActionResult Create([Bind(Include = "EventId,Name,EventDateTime,ImageUrl,Description,LocationId,EventCategoryId,CreatorId")] Event model)
         {
             if (ModelState.IsValid)
             {
-                db.Events.Add(@event);
+                var currentUserId = User.Identity.GetUserId();
+
+                model.CreatorId = currentUserId;
+                db.Events.Add(model);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EventCategoryId = new SelectList(db.EventCategories, "Id", "CategoryName", @event.EventCategoryId);
-            ViewBag.LocationId = new SelectList(db.Locations, "Id", "Name", @event.LocationId);
-            return View(@event);
+            ViewBag.EventCategoryId = new SelectList(db.EventCategories, "Id", "CategoryName", model.EventCategoryId);
+            ViewBag.LocationId = new SelectList(db.Locations, "Id", "Name", model.LocationId);
+            return View(model);
         }
 
         // GET: Events/Edit/5

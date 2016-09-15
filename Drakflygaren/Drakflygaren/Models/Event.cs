@@ -17,7 +17,7 @@ namespace Drakflygaren.Models
         public int LocationId { get; set; }
         public int EventCategoryId { get; set; }
 
-        public int CreatorId { get; set; }
+        public string CreatorId { get; set; }
         public virtual ApplicationUser Creator { get; set; }
 
         //Navigation Properties
