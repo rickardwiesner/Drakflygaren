@@ -35,6 +35,15 @@ namespace Drakflygaren.Controllers
             {
                 return HttpNotFound();
             }
+
+            var userId = User.Identity.GetUserId();
+
+            if (!db.TopicViews.Any(tv => tv.UserId == userId && tv.TopicId == topic.TopicId) && userId != null)
+            {
+                db.TopicViews.Add(new TopicView { TopicId = topic.TopicId, UserId = userId });
+                db.SaveChanges();
+            }
+
             return View(new TopicViewModel { Topic = topic});
         }
         [HttpPost]
