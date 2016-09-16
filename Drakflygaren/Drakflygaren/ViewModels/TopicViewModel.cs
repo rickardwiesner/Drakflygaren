@@ -9,10 +9,8 @@ namespace Drakflygaren.ViewModels
     public class TopicViewModel
     {
         public Topic Topic { get; set; }
-        
+
         public string Text { get; set; }
 
-        public int TopicID { get; set; }
-
-}
+    }
 }

@@ -5,46 +5,34 @@
 }
 
 <h2>@Model.Topic.Name</h2>
-
-<div>
-    <h4>@Model.Topic.Description<span class="pull-right">@Model.Topic.CreatedOn</span></h4>
-    <hr />
+<h4>@Model.Topic.Description<span class="pull-right">@Model.Topic.CreatedOn</span></h4>
+<hr />
+<div class="container list-group">
     @foreach (var comment in Model.Topic.Comments)
     {
-        <div>
-            <div>
-                <p>
-                    <span class="pull-right">@comment.CommentDateTime</span>
-                </p>
-            </div>
+        <div class="list-group-item">
+            <p>
+                <span class="pull-right text-muted">@comment.User.UserName - @comment.CommentDateTime</span>
+            </p>
+            <p>@comment.Text</p>
+        </div>
+    }
+</div>
 
-            <div class="col-md-3">
-                <p>@comment.User.UserName</p>
-            </div>
-            <div class="col-md-9">
-                <p>@comment.Text</p>
-            </div>
+<div>
+    @using (Html.BeginForm("SendPost", "Topics", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Topic.TopicId)
+
+        <div class="form-group">
+            @Html.TextAreaFor(m => m.Text, new { @class = "form-control", rows = "5" })
         </div>
 
+        <input type="submit" class="btn btn-success" />
     }
-    <div>
-        @using (Html.BeginForm("SendPost", "Topics", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-
-            @Html.HiddenFor(m => m.Topic.TopicId)
-
-            @Html.EditorFor(m => m.Text)
-
-            <input type="submit" class="btn btn-success" />
-
-        }
-    </div>
-
-
-
 </div>
+<hr />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Topic.TopicId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Tillbaka till forum", "Index")
 </p>

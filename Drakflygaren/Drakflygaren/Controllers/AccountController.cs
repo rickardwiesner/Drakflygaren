@@ -379,7 +379,7 @@ namespace Drakflygaren.Controllers
             {
                 return RedirectToAction("Index", "Manage");
             }
-
+                
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
