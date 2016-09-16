@@ -17,6 +17,7 @@
                         <th>Stad</th>
                         <th>Väder</th>
                         <th>Vind</th>
+                        <th>Direction</th>
                         <th>Betyg</th>
                         @if (Request.IsAuthenticated)
                         {
@@ -31,9 +32,10 @@
                     {
                         <tr data-id="@locationViewModel.Location.Id">
                             <td>@locationViewModel.Location.Name</td>
-                            <td>@locationViewModel.Location.City</td>
-                            <td><i class="fa fa-sun-o text-warning"></i></td>
-                            <td>2 m/s</td>
+                            <td class="cityName">@locationViewModel.Location.City</td>
+                            <td class="cityTemp"></td>
+                            <td class="cityWind"></td>
+                            <td class="direction"></td>
                             <td class="location-rating">@locationViewModel.Rating</td>
                             @if (Request.IsAuthenticated)
                             {
@@ -150,4 +152,6 @@
             });
         }
     </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>
+<script src="~/Scripts/weather.js"></script>
 }
