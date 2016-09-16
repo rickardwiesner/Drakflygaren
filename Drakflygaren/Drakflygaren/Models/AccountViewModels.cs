@@ -6,8 +6,8 @@ namespace Drakflygaren.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Display(Name = "Användarnamn")]
+        public string Username { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -49,9 +49,8 @@ namespace Drakflygaren.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Användarnamn eller Email")]
+        public string UsernameEmail { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -64,6 +63,10 @@ namespace Drakflygaren.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "Användarnamn")]
+        public string Username { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

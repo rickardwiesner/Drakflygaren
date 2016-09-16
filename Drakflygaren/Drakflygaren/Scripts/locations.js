@@ -37,7 +37,7 @@
             success: function (data) {
                 var elements = $('[data-id=' + locationId + '] .rate-location');
                 var currentStars = elements.children('i.fa-star');
-                if (currentStars.length === rating) {
+                if (currentStars.length == rating) {
                     currentStars.each(function () {
                         var currentStar = $(this);
                         currentStar.toggleClass('fa-star fa-star-o');

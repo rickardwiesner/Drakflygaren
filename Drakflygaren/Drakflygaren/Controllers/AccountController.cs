@@ -89,9 +89,14 @@ namespace Drakflygaren.Controllers
                 return View(model);
             }
 
+            var db = new ApplicationDbContext();
+
+            var user = db.Users.FirstOrDefault(u => u.Email == model.UsernameEmail || u.UserName == model.UsernameEmail);
+            var username = user != null ? user.UserName : "";
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -167,7 +172,7 @@ namespace Drakflygaren.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -359,7 +364,7 @@ namespace Drakflygaren.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Username = loginInfo.DefaultUserName });
             }
         }
 
@@ -374,7 +379,7 @@ namespace Drakflygaren.Controllers
             {
                 return RedirectToAction("Index", "Manage");
             }
-
+                
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
@@ -383,7 +388,7 @@ namespace Drakflygaren.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Username + "@drakflygaren.se" };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
