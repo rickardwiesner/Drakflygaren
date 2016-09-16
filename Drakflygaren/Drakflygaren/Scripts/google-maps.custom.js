@@ -19,9 +19,6 @@ function initialize() {
     // Multiple Markers
     var markers = [];
 
-    // Info Window Content
-    var infoWindowContent = [];
-
     var locations = $('.location-row');
 
     locations.each(function () {
@@ -30,18 +27,7 @@ function initialize() {
         var long = location.find('.cityLong').val();
         var name = location.find('.locationName').html();
         var city = location.find('.cityName').html();
-        var temp = location.find('.cityTemp').html();
-        var wind = location.find('.cityWind').html();
-        var direction = location.find('.direction').html();
-
-        markers.push([name, lat, long]);
-        infoWindowContent.push([
-            '<div class="info_content">' +
-            '<h3>' + name + '</h3>' +
-            '<p>Stad: ' + city + '</p>' + 
-            '<p>Temperatur: ' + temp + '</p>' +
-            '<p>Vind: ' + temp + ' - Riktning: ' + direction + '</p>' +
-            '</div>'])
+        markers.push([name, lat, long, city]);
     });
 
     // Display multiple markers on a map
@@ -54,13 +40,36 @@ function initialize() {
         marker = new google.maps.Marker({
             position: position,
             map: map,
-            title: markers[i][0]
+            title: markers[i][0],
+            city: markers[i][3]
         });
 
         // Allow each marker to have an info window
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
+            var temp;
+            var wind;
+            var direction;
+
+            $.simpleWeather({
+                location: marker.getPosition(),
+                unit: 'c',
+                success: function (weather) {
+                    temp = weather.temp;
+                    wind = weather.wind.speed;
+                    direction = weather.wind.direction;
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
             return function () {
-                infoWindow.setContent(infoWindowContent[i][0]);
+                infoWindow.setContent('<div class="info_content">' +
+            '<h3>' + marker.get('title') + '</h3>' +
+            '<p>Stad: ' + marker.get('city') + '</p>' +
+            '<p>Temperatur: ' + temp + '</p>' +
+            '<p>Vind: ' + wind + ' - Riktning: ' + direction + '</p>' +
+            '</div>');
                 infoWindow.open(map, marker);
             }
         })(marker, i));
