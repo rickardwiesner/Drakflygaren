@@ -23,6 +23,7 @@ namespace Drakflygaren.Controllers
         {
         }
 
+        
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
