@@ -8,8 +8,12 @@
 <h4>@Model.Topic.Description<span class="pull-right">@Model.Topic.CreatedOn</span></h4>
 <hr />
 <div class="container list-group">
+
     @foreach (var comment in Model.Topic.Comments)
     {
+        <div>
+            <a href="@Url.Action("ReportPost", "Topics", new {reportedPostId = comment.Id })" class="fa fa-exclamation-triangle"></a>
+        </div>
         <div class="list-group-item">
             <p>
                 <span class="pull-right text-muted">@comment.User.UserName - @comment.CommentDateTime</span>

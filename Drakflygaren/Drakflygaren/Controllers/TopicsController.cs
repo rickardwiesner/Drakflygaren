@@ -65,8 +65,17 @@ namespace Drakflygaren.Controllers
             
         }
 
+        public ActionResult ReportPost(int reportedPostId)
+        {
+            var reportedPost = db.TopicComments.FirstOrDefault(x => x.Id == reportedPostId);
 
-
+            if (reportedPost.IsReported == false)
+            {
+                reportedPost.IsReported = true;
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         [Authorize]
         public ActionResult Create()
