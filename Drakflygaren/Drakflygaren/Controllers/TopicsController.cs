@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Drakflygaren.Models;
 using Microsoft.AspNet.Identity;
 using Drakflygaren.ViewModels;
+using Drakflygaren.Helpers;
 
 namespace Drakflygaren.Controllers
 {
@@ -44,35 +45,45 @@ namespace Drakflygaren.Controllers
                 db.SaveChanges();
             }
 
-            return View(new TopicViewModel { Topic = topic});
+            return View(new TopicViewModel { Topic = topic });
         }
         [HttpPost]
         public ActionResult SendPost(TopicViewModel model)
         {
             var userId = User.Identity.GetUserId();
-            db.TopicComments.Add(new TopicComment {
+            db.TopicComments.Add(new TopicComment
+            {
                 Text = model.Text,
                 TopicId = model.Topic.TopicId,
                 UserId = userId,
                 CommentDateTime = DateTime.Now,
-                
-               
+
             });
 
             db.SaveChanges();
-            return RedirectToAction("Details", new {id = model.Topic.TopicId});
+            return RedirectToAction("Details", new { id = model.Topic.TopicId });
 
-            
+
         }
 
-        public ActionResult ReportPost(int reportedPostId)
+        public ActionResult ReportPost(int reportedPostId, ReportCategory reportCategory)
         {
-            var reportedPost = db.TopicComments.FirstOrDefault(x => x.Id == reportedPostId);
+            //Chillar lite med detta, fattar inte riktigt. ta bort om ni vill
+            //var currentUser = User.Identity.GetUserId();
 
-            if (reportedPost.IsReported == false)
-            {
-                reportedPost.IsReported = true;
-            }
+            //db.Reports.Add(new Report
+            //{
+            //    UserId = currentUser,
+            //    Category = reportCategory,
+            //    CommentId = reportedPostId,
+            //});
+            //var reportedPost = db.TopicComments.FirstOrDefault(x => x.Id == reportedPostId);
+
+            ////if (reportedPost.IsReported == false)
+            ////{
+            ////    reportedPost.IsReported = true;
+            ////}
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
