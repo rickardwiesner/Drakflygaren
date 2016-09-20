@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Drakflygaren.Models;
 using Microsoft.AspNet.Identity;
 using Drakflygaren.ViewModels;
+using Drakflygaren.Helpers;
 
 namespace Drakflygaren.Controllers
 {
@@ -24,7 +25,7 @@ namespace Drakflygaren.Controllers
         }
 
         // GET: Topics/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string message)
         {
             if (id == null)
             {
@@ -44,29 +45,61 @@ namespace Drakflygaren.Controllers
                 db.SaveChanges();
             }
 
-            return View(new TopicViewModel { Topic = topic});
+            ViewBag.Message = message;
+            return View(new TopicViewModel { Topic = topic });
         }
+
         [HttpPost]
         public ActionResult SendPost(TopicViewModel model)
         {
             var userId = User.Identity.GetUserId();
-            db.TopicComments.Add(new TopicComment {
+            db.TopicComments.Add(new TopicComment
+            {
                 Text = model.Text,
                 TopicId = model.Topic.TopicId,
                 UserId = userId,
                 CommentDateTime = DateTime.Now,
-                
-               
+
             });
 
             db.SaveChanges();
-            return RedirectToAction("Details", new {id = model.Topic.TopicId});
-
-            
+            return RedirectToAction("Details", new { id = model.Topic.TopicId });
         }
 
+        public ActionResult ReportPost(int reportedPostId, ReportCategory reportCategory)
+        {       
+            var currentUserId = User.Identity.GetUserId();
+            var message = string.Empty;
 
+            //Bara kolla så att personen inte redan har anmält den här posten
+            if (!db.Reports.Any(r => r.CommentId == reportedPostId && r.ReporterId == currentUserId))
+            {
+                //Här känns det ju helt rätt
+                db.Reports.Add(new Report
+                {
+                    //Ändrade UserId till ReporterId för att EF ska fatta att det är en FK
+                    //Hade självklart gått att ändra Reporter till User också..
+                    //Annars måste man ange det manuellt [ForeignKey(Bla)]
+                    ReporterId = currentUserId,
+                    Category = reportCategory,
+                    //Samma här CommentToReportId till CommentId
+                    CommentId = reportedPostId
+                });
 
+                db.SaveChanges();
+                message = "Kommentaren har blivit anmäld och kommer att åtgärdas så fort som möjligt";
+            }
+
+            else
+            {
+                message = "Du har redan anmält den här kommentaren";
+            }
+
+            //Ta fram postens topic så vi kan skicka tillbaka användaren till rätt ställe
+            var topicId = db.TopicComments.Find(reportedPostId).TopicId;
+
+            return RedirectToAction("Details", new { id = topicId, message = message });
+        }
 
         [Authorize]
         public ActionResult Create()

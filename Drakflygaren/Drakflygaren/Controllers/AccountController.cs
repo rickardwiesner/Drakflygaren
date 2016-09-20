@@ -23,8 +23,8 @@ namespace Drakflygaren.Controllers
         {
         }
 
-        
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,9 +36,9 @@ namespace Drakflygaren.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -67,11 +67,15 @@ namespace Drakflygaren.Controllers
                 db.SaveChanges();
             }
 
-            if (!db.Users.Any(u => u.UserName == "admin@drakflygaren.se"))
+            if (!db.Users.Any(u => u.UserName == "admin"))
             {
-                var user = new ApplicationUser { UserName = "admin@drakflygaren.se", Email = "admin@drakflygaren.se" };
-                UserManager.Create(user, "dragonlord");
-                UserManager.AddToRole(user.Id, "Admin");
+                var user = new ApplicationUser { UserName = "admin", Email = "admin@drakflygaren.se" };
+                var result = UserManager.Create(user, "dragonlord");
+                if (result.Succeeded)
+                {
+                    ViewBag.Message = "Admin har skapats";
+                    UserManager.AddToRole(user.Id, "Admin");
+                }
             }
 
             ViewBag.ReturnUrl = returnUrl;
@@ -142,7 +146,7 @@ namespace Drakflygaren.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -177,8 +181,8 @@ namespace Drakflygaren.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -380,7 +384,7 @@ namespace Drakflygaren.Controllers
             {
                 return RedirectToAction("Index", "Manage");
             }
-                
+
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider

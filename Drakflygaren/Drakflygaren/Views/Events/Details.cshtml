@@ -52,6 +52,13 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EventId }) |
+    @* Fullösning med <span> här(?) får error med bara | efter sista parantesen.*@
+    @if (ViewBag.CurrentUser == Model.CreatorId || ViewBag.IsAdmin == true)
+    {
+        @Html.ActionLink("Ändra", "Edit", new { id = Model.EventId }) 
+        <span> | </span>
+        @Html.ActionLink("Ta bort eventet", "DeleteEvent", new { id = Model.EventId })
+    }
+    <span> | </span>
     @Html.ActionLink("Back to List", "Index")
 </p>
