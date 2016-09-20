@@ -198,7 +198,6 @@
     <Compile Include="Models\LocationRating.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Report.cs" />
-    <Compile Include="Models\ReportCategory.cs" />
     <Compile Include="Models\Topic.cs" />
     <Compile Include="Models\TopicAction.cs" />
     <Compile Include="Models\TopicComment.cs" />
