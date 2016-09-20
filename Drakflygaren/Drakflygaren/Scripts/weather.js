@@ -1,29 +1,29 @@
-﻿//Reads each place from table in Index View & returns its respective data
+﻿var locations = $('.location-row');
 
-//function that takes a location & on success fills requested data
-function loadWeather(location) {
+locations.each(function () {
+    var location = $(this);
+    var long = location.find('.cityLong').val();
+    var lat = location.find('.cityLat').val();
+    var locationId = $(this).attr('data-id');
+    loadWeather(lat + ',' + long, locationId);
+});
+
+
+function loadWeather(location, locationId) {
     $.simpleWeather({
         location: location,
         unit: 'c',
         success: function (weather) {
-            $('.cityTemp').html(weather.temp);
-            $('.cityWind').html(weather.wind.speed);
-            $('.direction').html(weather.wind.direction);
+            $('[data-id=' + locationId + '] .cityTemp').html(weather.temp);
+            $('[data-id=' + locationId + '] .cityWind').html(weather.wind.speed);
+            $('[data-id=' + locationId + '] .direction').html(weather.wind.direction);
         },
         error: function (error) {
-            $("#cityTemp").html('<p>' + error + '</p>');
+            console.log(error);
         }
     });
 }
 
-//loading all cities from foreach in index view in a list
-var list = document.getElementsByClassName('cityName');
-
-//iterating all cities one by one to load their data
-for (var i = 0; i < list.length; i++)
-{
-    loadWeather(list[i].innerHTML);
-}
 
 
 
