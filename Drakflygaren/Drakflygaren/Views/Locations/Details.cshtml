@@ -4,5 +4,46 @@
     ViewBag.Title = Model.Location.Name;
 }
 
-<h2>@ViewBag.Title</h2>
 
+<div class="row">
+    <div class="@Html.AttributeEncode(Request.IsAuthenticated ? "col-md-9" : "col-md-12" ) location-row">
+        <h2 class="locationName">
+            @ViewBag.Title
+            @if (Request.IsAuthenticated)
+            {
+                <span class="pull-right">
+                    <a class="toggle-favorite"><i class="fa @Html.AttributeEncode(Model.Favorite ? "fa-heart" : "fa-heart-o") text-danger"></i></a>
+                </span>
+            }
+        </h2>
+        <h4>Stad: <span class="cityName">@Model.Location.City</span></h4>
+        <p>Skapad av: @Model.Location.Creator.UserName</p>
+        <p>Temperatur: <span class="cityTemp"></span></p>
+        <p>Vind: <span class="cityWind"></span></p>
+        <p>Vindriktning: <span class="direction"></span></p>
+        <form hidden>
+            <input class="cityLong" value="@Model.Location.Longitude" />
+            <input class="cityLat" value="@Model.Location.Latitude" />
+        </form>
+        <hr />
+        <div id="map_wrapper">
+            <div id="map_canvas" class="mapping"></div>
+        </div>
+    </div>
+
+    @if (Request.IsAuthenticated)
+    {
+        <div class="col-md-3">
+            <h2>Favoriter</h2>
+            <div id="favorite-locations">
+                @Html.Action("LocationFavorites")
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>
+    <script src="~/Scripts/weather.js"></script>
+    <script src="~/Scripts/google-maps.custom.js"></script>
+}

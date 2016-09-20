@@ -15,16 +15,15 @@
                     <tr>
                         <th>Namn</th>
                         <th>Stad</th>
-                        <th>Väder</th>
+                        <th>Temperatur</th>
                         <th>Vind</th>
-                        <th>Direction</th>
+                        <th>Vindriktning</th>
                         <th>Betyg</th>
                         @if (Request.IsAuthenticated)
                         {
                             <th>Betygsätt</th>
                             <th>Favorit</th>
                         }
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,7 +36,7 @@
                                     <input class="cityLat" value="@locationViewModel.Location.Latitude" />
                                 </form>
                             </td>
-                            <td class="locationName">@locationViewModel.Location.Name</td>
+                            <td><a class="locationName" href="@Url.Action("Details", new { locationId = locationViewModel.Location.Id })">@locationViewModel.Location.Name</a></td>
                             <td class="cityName">@locationViewModel.Location.City</td>
                             <td class="cityTemp"></td>
                             <td class="cityWind"></td>
@@ -53,14 +52,6 @@
                                 </td>
                                 <td><a class="toggle-favorite"><i class="fa @Html.AttributeEncode(locationViewModel.Favorite ? "fa-heart" : "fa-heart-o") text-danger"></i></a></td>
                             }
-                            <td>
-                                <a href="@Url.Action("Details", new { locationId = locationViewModel.Location.Id })"><i class="fa fa-eye"></i></a>
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <a href="@Url.Action("Edit", new { locationId = locationViewModel.Location.Id })"><i class="fa fa-edit"></i></a>
-                                    <a href="@Url.Action("Delete", new { locationId = locationViewModel.Location.Id })"><i class="fa fa-trash-o"></i></a>
-                                }
-                            </td>
                         </tr>
                     }
                 </tbody>
