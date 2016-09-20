@@ -6,7 +6,7 @@
         foreach (var locationFavorite in Model)
         {
 
-            <a data-id="@locationFavorite.LocationId" href="@Url.Action("Details", new { locationId = locationFavorite.Location.Id })" class="list-group-item location-row">
+            <a data-id="@locationFavorite.LocationId" href="@Url.Action("Details", new { locationId = locationFavorite.LocationId })" class="list-group-item location-row">
                 <input class="cityLat" hidden value="@locationFavorite.Location.Latitude" />
                 <input class="cityLong" hidden value="@locationFavorite.Location.Longitude" />
                 <div><strong>@locationFavorite.Location.Name</strong><span class="pull-right"><img class="weatherIcon" alt="weather" /></span></div>

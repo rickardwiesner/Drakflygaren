@@ -4,8 +4,8 @@
     ViewBag.Title = Model.Location.Name;
 }
 
-<div data-id="@Model.Location.Id" class="row location-row">
-    <div class="@Html.AttributeEncode(Request.IsAuthenticated ? "col-md-9" : "col-md-12" )">
+<div class="row">
+    <div data-id="@Model.Location.Id" class="@Html.AttributeEncode(Request.IsAuthenticated ? "col-md-9" : "col-md-12" ) location-row">
         <h2 class="locationName">
             @ViewBag.Title
             @if (Request.IsAuthenticated)
@@ -16,7 +16,7 @@
             }
         </h2>
         <h4>Stad: <span class="cityName">@Model.Location.City</span></h4>
-        <p>Skapad av: @Model.Location.Creator.UserName</p>
+        <p>Tillagd av: @Model.Location.Creator.UserName</p>
         <p>Temperatur: <span class="cityTemp"></span> <span>Grader</span></p>
         <p>Vind: <span class="cityWind"></span> <span>M/s</span></p>
         <p>Vindriktning: <span class="direction"></span></p>
