@@ -17,6 +17,16 @@
                 var icon = $('[data-id=' + locationId + '] .toggle-favorite i.fa');
                 icon.toggleClass("fa-heart fa-heart-o");
                 $("#favorite-locations").html(data);
+
+                var locations = $('.location-row');
+
+                locations.each(function () {
+                    var location = $(this);
+                    var long = location.find('.cityLong').val();
+                    var lat = location.find('.cityLat').val();
+                    var locationId = location.attr('data-id');
+                    loadWeather(lat + ',' + long, locationId);
+                });
             }
         });
     });
