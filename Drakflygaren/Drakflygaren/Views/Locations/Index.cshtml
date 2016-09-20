@@ -30,7 +30,7 @@
                 <tbody>
                     @foreach (var locationViewModel in Model)
                     {
-                        <tr data-id="@locationViewModel.Location.Id" class="location-row">
+                        <tr data-id="@locationViewModel.Location.Id" class="weather-item map-item">
                             <td hidden>
                                 <form>
                                     <input class="cityLong" value="@locationViewModel.Location.Longitude" />
