@@ -9,13 +9,12 @@ namespace Drakflygaren.Models
     public class Report
     {
         public int Id { get; set; }
-        //public string Text { get; set; }
 
-        public string UserId { get; set; }
+        public string ReporterId { get; set; }
         public virtual ApplicationUser Reporter { get; set; }
 
         public int CommentId { get; set; }
-        public virtual TopicComment CommentToReport { get; set; }
+        public virtual TopicComment Comment { get; set; }
 
         public ReportCategory Category { get; set; }
     }

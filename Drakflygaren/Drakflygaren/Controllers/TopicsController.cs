@@ -25,7 +25,7 @@ namespace Drakflygaren.Controllers
         }
 
         // GET: Topics/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string message)
         {
             if (id == null)
             {
@@ -45,8 +45,10 @@ namespace Drakflygaren.Controllers
                 db.SaveChanges();
             }
 
+            ViewBag.Message = message;
             return View(new TopicViewModel { Topic = topic });
         }
+
         [HttpPost]
         public ActionResult SendPost(TopicViewModel model)
         {
@@ -62,30 +64,41 @@ namespace Drakflygaren.Controllers
 
             db.SaveChanges();
             return RedirectToAction("Details", new { id = model.Topic.TopicId });
-
-
         }
 
         public ActionResult ReportPost(int reportedPostId, ReportCategory reportCategory)
-        {
-            //Chillar lite med detta, fattar inte riktigt. ta bort om ni vill
-            //var currentUser = User.Identity.GetUserId();
+        {       
+            var currentUserId = User.Identity.GetUserId();
+            var message = string.Empty;
 
-            //db.Reports.Add(new Report
-            //{
-            //    UserId = currentUser,
-            //    Category = reportCategory,
-            //    CommentId = reportedPostId,
-            //});
-            //var reportedPost = db.TopicComments.FirstOrDefault(x => x.Id == reportedPostId);
+            //Bara kolla så att personen inte redan har anmält den här posten
+            if (!db.Reports.Any(r => r.CommentId == reportedPostId && r.ReporterId == currentUserId))
+            {
+                //Här känns det ju helt rätt
+                db.Reports.Add(new Report
+                {
+                    //Ändrade UserId till ReporterId för att EF ska fatta att det är en FK
+                    //Hade självklart gått att ändra Reporter till User också..
+                    //Annars måste man ange det manuellt [ForeignKey(Bla)]
+                    ReporterId = currentUserId,
+                    Category = reportCategory,
+                    //Samma här CommentToReportId till CommentId
+                    CommentId = reportedPostId
+                });
 
-            ////if (reportedPost.IsReported == false)
-            ////{
-            ////    reportedPost.IsReported = true;
-            ////}
+                db.SaveChanges();
+                message = "Kommentaren har blivit anmäld och kommer att åtgärdas så fort som möjligt";
+            }
 
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            else
+            {
+                message = "Du har redan anmält den här kommentaren";
+            }
+
+            //Ta fram postens topic så vi kan skicka tillbaka användaren till rätt ställe
+            var topicId = db.TopicComments.Find(reportedPostId).TopicId;
+
+            return RedirectToAction("Details", new { id = topicId, message = message });
         }
 
         [Authorize]

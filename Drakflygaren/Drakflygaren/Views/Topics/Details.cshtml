@@ -1,9 +1,13 @@
-﻿@model Drakflygaren.ViewModels.TopicViewModel
+﻿@using Drakflygaren.ViewModels
+@using Drakflygaren.Helpers
+
+@model TopicViewModel
 
 @{
     ViewBag.Title = "Details";
 }
 
+<h4 class="text-warning">@ViewBag.Message</h4>
 <h2>@Model.Topic.Name</h2>
 <h4>@Model.Topic.Description<span class="pull-right">@Model.Topic.CreatedOn</span></h4>
 <hr />
@@ -11,13 +15,15 @@
 
     @foreach (var comment in Model.Topic.Comments)
     {
-        <div>
-            <a href="@Url.Action("ReportPost", "Topics", new {reportedPostId = comment.Id })" class="fa fa-exclamation-triangle"></a>
-        </div>
         <div class="list-group-item">
-            <p>
-                <span class="pull-right text-muted">@comment.User.UserName - @comment.CommentDateTime</span>
-            </p>
+            <div class="dropdown pull-right">
+                <a data-toggle="dropdown" class="fa fa-exclamation-triangle"></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Rasistiskt", "ReportPost", new { reportedPostId = comment.Id, reportCategory = ReportCategory.Rasistiskt })</li>
+                    <li>@Html.ActionLink("Stötande", "ReportPost", new { reportedPostId = comment.Id, reportCategory = ReportCategory.Stötande })</li>
+                </ul>
+            </div>
+            <span class="pull-right text-muted">@comment.User.UserName - @comment.CommentDateTime</span>
             <p>@comment.Text</p>
         </div>
     }
