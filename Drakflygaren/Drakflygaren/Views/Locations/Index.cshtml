@@ -18,13 +18,12 @@
                         <th>Väder</th>
                         <th>&deg;C</th>
                         <th>Vind m/s</th>
-                        <th>Vindriktning</th>
                         <th>Betyg</th>
                         @if (Request.IsAuthenticated)
                         {
                             <th>Betygsätt</th>
                             <th>Favorit</th>
-                            <th>Avstånd (kms)</th>
+                            <th>Avstånd km</th>
                         }
                     </tr>
                 </thead>
@@ -42,8 +41,7 @@
                             <td class="cityName">@locationViewModel.Location.City</td>
                             <td><img alt="weather" class="weatherIcon" /></td>
                             <td class="cityTemp"></td>
-                            <td class="cityWind"></td>
-                            <td><span class="fa fa-location-arrow direction"></span></td>
+                            <td><span class="cityWind"></span> <span class="fa fa-location-arrow direction"></span></td>
                             <td class="location-rating">@locationViewModel.Rating</td>
                             @if (Request.IsAuthenticated)
                             {
