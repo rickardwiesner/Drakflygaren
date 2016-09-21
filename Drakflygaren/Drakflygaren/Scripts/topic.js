@@ -2,7 +2,7 @@
     $('.like-topic-button').click(function () {
         var topicId = $(this).parents('tr').attr('data-id');
         $.ajax({
-            url: '/Topic/TopicLike',
+            url: '/Topics/TopicLike',
             data: { 'topicId': topicId },
             type: 'POST',
             error: function (jqXHR, textStatus, errorThrown) {

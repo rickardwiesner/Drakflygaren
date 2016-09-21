@@ -23,7 +23,7 @@ namespace Drakflygaren.Models
         //Foreign key
         public string UserId { get; set; }
 
-        public bool Liked { get; set; }
+
         //Navigational Prop
 
         [ForeignKey("UserId")]

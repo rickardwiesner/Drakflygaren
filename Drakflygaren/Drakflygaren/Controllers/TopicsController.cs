@@ -20,8 +20,22 @@ namespace Drakflygaren.Controllers
         // GET: Topics
         public ActionResult Index()
         {
-            var topics = db.Topics.Include(t => t.CreatedBy);
-            return View(topics.ToList());
+            var topicViewModels = new List<TopicViewModel>();
+
+            foreach (var topic in db.Topics.ToList())
+            {
+                topicViewModels.Add(GetTopicViewModel(topic));
+            }
+            return View(topicViewModels);
+        }
+
+        private TopicViewModel GetTopicViewModel(Topic topic)
+        {
+            var userId = User.Identity.GetUserId();
+            bool liked = db.TopicLikes.Any(tl => tl.TopicId == topic.TopicId && tl.UserId == userId);
+
+            return new TopicViewModel { Topic = topic, Liked = liked };
+            
         }
 
         // GET: Topics/Details/5
@@ -69,7 +83,7 @@ namespace Drakflygaren.Controllers
         }
 
         [HttpPost]
-        public int TopicLikes(int topicId)
+        public int TopicLike(int topicId)
         {
             var userId = User.Identity.GetUserId();
             var userTopicLike = db.TopicLikes.FirstOrDefault(tl => tl.TopicId == topicId && tl.UserId == userId);
@@ -84,7 +98,8 @@ namespace Drakflygaren.Controllers
 
             }
             db.SaveChanges();
-            return 0;
+
+            return db.TopicLikes.Where(tl => tl.TopicId == topicId).Count();
         }
 
         public ActionResult ReportPost(int reportedPostId, ReportCategory reportCategory)

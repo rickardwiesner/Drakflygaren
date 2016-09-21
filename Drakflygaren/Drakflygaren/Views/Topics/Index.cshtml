@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Drakflygaren.Models.Topic>
+﻿@model IEnumerable<Drakflygaren.ViewModels.TopicViewModel>
 
 @{
     ViewBag.Title = "Forum";
@@ -24,28 +24,35 @@
             <th>Skapad av</th>
             <th>Gilla</th>
             <th></th>
+            @if (User.IsInRole("Admin"))
+            {
             <th>Editera</th>
+            }
         </tr>
     </thead>
     <tbody>
 
 
-        @foreach (var topic in Model)
+        @foreach (var topicViewModel in Model)
         {
-            <tr data-id="@topic.TopicId">
-                <td>@Html.ActionLink(topic.Name, "Details", new { id = topic.TopicId })</td>
-                <td>@topic.Description</td>
-                <td>@topic.CreatedOn</td>
-                <td>@topic.Comments.Count</td>
-                <td>@topic.Views.Count</td>
-                <td>@topic.CreatedBy.UserName</td>
-                <td><a class="like-topic-button"><i class="fa @Html.AttributeEncode(topic.Liked ? "fa-thumbs-up" : "fa-thumbs-o-up")"></i></a></td>
-                <td class="topic-likes-count">@topic.TopicLikes.Count</td>
-                <td>               
-                    @Html.ActionLink("Edit", "Edit", new { id = topic.TopicId }) |
-                    @Html.ActionLink("Details", "Details", new { id = topic.TopicId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = topic.TopicId })
-                </td>
+            <tr data-id="@topicViewModel.Topic.TopicId">
+                <td>@Html.ActionLink(topicViewModel.Topic.Name, "Details", new { id = topicViewModel.Topic.TopicId })</td>
+                <td>@topicViewModel.Topic.Description</td>
+                <td>@topicViewModel.Topic.CreatedOn</td>
+                <td>@topicViewModel.Topic.Comments.Count</td>
+                <td>@topicViewModel.Topic.Views.Count</td>
+                <td>@topicViewModel.Topic.CreatedBy.UserName</td>
+                <td><a class="like-topic-button"><i class="fa @Html.AttributeEncode(topicViewModel.Liked ? "fa-thumbs-up" : "fa-thumbs-o-up")"></i></a></td>
+                <td class="topic-likes-count">@topicViewModel.Topic.TopicLikes.Count</td>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = topicViewModel.Topic.TopicId }) |
+                    @Html.ActionLink("Details", "Details", new { id = topicViewModel.Topic.TopicId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = topicViewModel.Topic.TopicId })
+                    </td>
+                }
             </tr>
 
 
