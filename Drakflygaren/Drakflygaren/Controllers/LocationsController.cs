@@ -25,15 +25,7 @@ namespace Drakflygaren.Controllers
 
             foreach (var location in db.Locations.ToList())
             {
-                var userLocationRating = db.LocationRatings.FirstOrDefault(lr => lr.UserId == userId && lr.LocationId == location.Id);
-
-                locationViewModels.Add(new LocationViewModel
-                {
-                    Location = location,
-                    Favorite = db.LocationFavorites.Any(fl => fl.UserId == userId && fl.LocationId == location.Id),
-                    Rating = db.LocationRatings.Where(lr => lr.LocationId == location.Id).Select(lr => lr.Rating).DefaultIfEmpty(0).Average(),
-                    UserRating = userLocationRating != null ? userLocationRating.Rating : 0
-                });
+                locationViewModels.Add(GetLocationViewModel(location));               
             }
 
             return View(locationViewModels);
@@ -42,11 +34,7 @@ namespace Drakflygaren.Controllers
         [AllowAnonymous]
         public ActionResult Details(int locationId)
         {
-            var userId = User.Identity.GetUserId();
-            var location = db.Locations.Find(locationId);
-            var favorite = db.LocationFavorites.Any(fl => fl.UserId == userId && fl.LocationId == location.Id);
-
-            return View(new LocationViewModel { Location = location, Favorite = favorite });
+            return View(GetLocationViewModel(db.Locations.Find(locationId)));
         }
 
         public ActionResult Create()
@@ -193,6 +181,20 @@ namespace Drakflygaren.Controllers
             return Json(locationRating);
         }
 
+        LocationViewModel GetLocationViewModel(Location location)
+        {
+            var userId = User.Identity.GetUserId();
+            var userLocationRating = db.LocationRatings.FirstOrDefault(lr => lr.UserId == userId && lr.LocationId == location.Id);
+
+            return new LocationViewModel
+            {
+                Location = location,
+                Favorite = db.LocationFavorites.Any(fl => fl.UserId == userId && fl.LocationId == location.Id),
+                Rating = db.LocationRatings.Where(lr => lr.LocationId == location.Id).Select(lr => lr.Rating).DefaultIfEmpty(0).Average(),
+                UserRating = userLocationRating != null ? userLocationRating.Rating : 0
+            };
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -201,5 +203,16 @@ namespace Drakflygaren.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //public int Distance()
+        //{
+        //    var currentLocation;
+        //    var favoritPlatsDistance;
+        //    int distance = currentLocation
+            
+             
+             
+        //    return distance;
+        //}
     }
 }

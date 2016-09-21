@@ -60,6 +60,15 @@ namespace Drakflygaren.Controllers
         // GET: Events/Details/5
         public ActionResult Details(int? id)
         {
+            var currentUser = User.Identity.GetUserId();
+
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.IsAdmin = false;
+
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.IsAdmin = true;
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -171,6 +180,16 @@ namespace Drakflygaren.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult DeleteEvent(int id)
+        {
+            var currentEvent = db.Events.FirstOrDefault(x => x.EventId == id);
+
+            db.Events.Remove(currentEvent);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+            //db.Events.Remove;
         }
     }
 }

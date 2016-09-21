@@ -16,32 +16,34 @@
                         <th>Namn</th>
                         <th>Stad</th>
                         <th>Väder</th>
-                        <th>Vind</th>
-                        <th>Direction</th>
+                        <th>&deg;C</th>
+                        <th>Vind m/s</th>
+                        <th>Vindriktning</th>
                         <th>Betyg</th>
                         @if (Request.IsAuthenticated)
                         {
                             <th>Betygsätt</th>
                             <th>Favorit</th>
+                            <th>Avstånd (kms)</th>
                         }
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var locationViewModel in Model)
                     {
-                        <tr data-id="@locationViewModel.Location.Id" class="location-row">
+                        <tr data-id="@locationViewModel.Location.Id" class="weather-item map-item">
                             <td hidden>
                                 <form>
                                     <input class="cityLong" value="@locationViewModel.Location.Longitude" />
                                     <input class="cityLat" value="@locationViewModel.Location.Latitude" />
                                 </form>
                             </td>
-                            <td class="locationName">@locationViewModel.Location.Name</td>
+                            <td><a class="locationName" href="@Url.Action("Details", new { locationId = locationViewModel.Location.Id })">@locationViewModel.Location.Name</a></td>
                             <td class="cityName">@locationViewModel.Location.City</td>
+                            <td><img alt="weather" class="weatherIcon" /></td>
                             <td class="cityTemp"></td>
                             <td class="cityWind"></td>
-                            <td class="direction"></td>
+                            <td><span class="fa fa-location-arrow direction"></span></td>
                             <td class="location-rating">@locationViewModel.Rating</td>
                             @if (Request.IsAuthenticated)
                             {
@@ -52,15 +54,8 @@
                                     }
                                 </td>
                                 <td><a class="toggle-favorite"><i class="fa @Html.AttributeEncode(locationViewModel.Favorite ? "fa-heart" : "fa-heart-o") text-danger"></i></a></td>
+                                <td class="distance"></td>
                             }
-                            <td>
-                                <a href="@Url.Action("Details", new { locationId = locationViewModel.Location.Id })"><i class="fa fa-eye"></i></a>
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <a href="@Url.Action("Edit", new { locationId = locationViewModel.Location.Id })"><i class="fa fa-edit"></i></a>
-                                    <a href="@Url.Action("Delete", new { locationId = locationViewModel.Location.Id })"><i class="fa fa-trash-o"></i></a>
-                                }
-                            </td>
                         </tr>
                     }
                 </tbody>
@@ -89,4 +84,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>
     <script src="~/Scripts/weather.js"></script>
     <script src="~/Scripts/google-maps.custom.js"></script>
+    <!--Google DistanceMatrix API-->
+@*<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbKDptxqIVNenodO7_Ol4YX96nKJgoNqs&callback=initMap">
+</script>*@
+    <!--Distance Calculator Script-->
+    <script src="~/Scripts/distanceCalculator.js"></script>
 }

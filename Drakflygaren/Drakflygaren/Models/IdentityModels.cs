@@ -42,7 +42,7 @@ namespace Drakflygaren.Models
         public DbSet<EventCategory> EventCategories { get; set; }
         public DbSet<EventLike> EventLikes { get; set; }
         public DbSet<EventComment> EventComments { get; set; }
-        
+        public DbSet<Report> Reports { get; set; }
 
     }
 }

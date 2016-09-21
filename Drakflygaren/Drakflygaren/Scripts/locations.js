@@ -5,7 +5,7 @@
     });
 
     $('.toggle-favorite').on('click', function () {
-        var locationId = $(this).parents('tr').attr('data-id');
+        var locationId = $(this).parents('.map-item').attr('data-id');
         $.ajax({
             url: '/Locations/ToggleFavorite',
             type: 'POST',
@@ -17,12 +17,23 @@
                 var icon = $('[data-id=' + locationId + '] .toggle-favorite i.fa');
                 icon.toggleClass("fa-heart fa-heart-o");
                 $("#favorite-locations").html(data);
+
+                var locations = $('.weather-item');
+                //var locations = $('.location-row');
+
+                locations.each(function () {
+                    var location = $(this);
+                    var long = location.find('.cityLong').val();
+                    var lat = location.find('.cityLat').val();
+                    var locationId = location.attr('data-id');
+                    loadWeather(lat + ',' + long, locationId);
+                });
             }
         });
     });
 
     $('.rate-location').on('click', function () {
-        var locationId = $(this).parents('tr').attr('data-id');
+        var locationId = $(this).parents('.map-item').attr('data-id');
         var rating = $(this).attr('data-rating');
         $.ajax({
             url: '/Locations/RateLocation',
