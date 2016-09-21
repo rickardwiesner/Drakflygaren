@@ -74,16 +74,18 @@ namespace Drakflygaren.Controllers
             var userId = User.Identity.GetUserId();
             var userTopicLike = db.TopicLikes.FirstOrDefault(tl => tl.TopicId == topicId && tl.UserId == userId);
 
-            if(userTopicLike == null)
+            if (userTopicLike == null)
             {
                 db.TopicLikes.Add(new TopicLike { UserId = userId, TopicId = topicId });
             }
             else
             {
                 db.TopicLikes.Remove(userTopicLike);
-                
+
             }
             db.SaveChanges();
+            return 0;
+        }
 
         public ActionResult ReportPost(int reportedPostId, ReportCategory reportCategory)
         {       
