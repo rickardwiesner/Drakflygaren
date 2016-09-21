@@ -201,5 +201,16 @@ namespace Drakflygaren.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //public int Distance()
+        //{
+        //    var currentLocation;
+        //    var favoritPlatsDistance;
+        //    int distance = currentLocation
+            
+             
+             
+        //    return distance;
+        //}
     }
 }

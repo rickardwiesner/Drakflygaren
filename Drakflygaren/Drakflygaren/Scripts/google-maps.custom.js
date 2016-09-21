@@ -12,7 +12,6 @@ function initialize() {
     var markers = [];
 
     var locations = $('.map-item');
-    //var locations = $('.location-row');
 
     locations.each(function () {
         var location = $(this);
@@ -21,6 +20,39 @@ function initialize() {
         var name = location.find('.locationName').html();
         var city = location.find('.cityName').html();
         markers.push([name, lat, long, city]);
+
+        //Travel
+        var latLng = new google.maps.LatLng(lat, long);
+        
+        var origins = { lat: 57.71, lng: 11.97 };
+        var destinations = { lat: latLng.lat(), lng: latLng.lng() };
+
+        var service = new google.maps.DistanceMatrixService;
+        service.getDistanceMatrix({
+            origins: [origins],
+            destinations: [destinations],
+            travelMode: 'DRIVING',
+            unitSystem: google.maps.UnitSystem.METRIC,
+            avoidHighways: false,
+            avoidTolls: false
+        },
+        function (response, status) {
+            if (status !== 'OK') {
+                alert('Error was: ' + status);
+            }
+            else {
+                var originList = response.originAddresses;
+                var destinationList = response.destinationAddresses;
+
+                for (var i = 0; i < originList.length; i++) {
+                    var results = response.rows[i].elements;
+                    for (var j = 0; j < results.length; j++) {
+                        $('[data-id=' + location.attr('data-id') + ']' + ' .distance').html(results[j].distance.text);
+                    }
+                }
+            }
+        });
+
     });
 
     //var bounds = new google.maps.LatLngBounds();
@@ -37,6 +69,7 @@ function initialize() {
     // Display multiple markers on a map
     var infoWindow = new google.maps.InfoWindow(), marker, i;
 
+
     // Loop through our array of markers & place each one on the map
     for (i = 0; i < markers.length; i++) {
         var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
@@ -47,6 +80,7 @@ function initialize() {
             title: markers[i][0],
             city: markers[i][3]
         });
+
 
         // Allow each marker to have an info window
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
