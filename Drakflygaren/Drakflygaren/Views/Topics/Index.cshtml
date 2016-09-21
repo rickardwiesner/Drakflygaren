@@ -4,66 +4,145 @@
     ViewBag.Title = "Forum";
 }
 
+@section scripts {
+    <script src="~/Scripts/topic.js"></script>
+}
+
 <h2>@ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("Skapa ny tråd", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </th>
-        <th>
-            Kommentarer
-        </th>
-        <th>
-            Visningar
-        </th>
-        <th>
-            Skapad av
-        </th>
-        @if (User.IsInRole("Admin"))
-        {
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Namn</th>
+            <th>Beskrivning</th>
+            <th>Skapad</th>
+            <th>Kommentarer</th>
+            <th>Visningar</th>
+            <th>Skapad av</th>
+            <th>Gilla</th>
             <th></th>
-        } 
-    </tr>
+            <th>Editera</th>
+        </tr>
+    </thead>
+    <tbody>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Name, "Details", new { id = item.TopicId })          
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
-        </td>
-        <td>
-            @item.Comments.Count 
-        </td>
-        <td>
-            @item.Views.Count
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy.UserName)
-        </td>
-        @if (User.IsInRole("Admin"))
+
+        @foreach (var topic in Model)
         {
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.TopicId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.TopicId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.TopicId })
-            </td>
-        }
-    </tr>
-}
+            <tr data-id="@topic.TopicId">
+                <td>@Html.ActionLink(topic.Name, "Details", new { id = topic.TopicId })</td>
+                <td>@topic.Description</td>
+                <td>@topic.CreatedOn</td>
+                <td>@topic.Comments.Count</td>
+                <td>@topic.Views.Count</td>
+                <td>@topic.CreatedBy.UserName</td>
+                <td><a class="like-topic-button"><i class="fa @Html.AttributeEncode(topic.Liked ? "fa-thumbs-up" : "fa-thumbs-o-up")"></i></a></td>
+                <td class="topic-likes-count">@topic.TopicLikes.Count</td>
+                <td>               
+                    @Html.ActionLink("Edit", "Edit", new { id = topic.TopicId }) |
+                    @Html.ActionLink("Details", "Details", new { id = topic.TopicId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = topic.TopicId })
+                </td>
+            </tr>
 
+
+
+
+        }
+    </tbody>
 </table>
+@*<tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </th>
+            <th>
+                Kommentarer
+            </th>
+            <th>
+                Visningar
+            </th>
+            <th>
+                Skapad av
+            </th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th></th>
+            }
+        </tr>
+
+
+
+        @*<tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </th>
+            <th>
+                Kommentarer
+            </th>
+            <th>
+                Visningar
+            </th>
+            <th>
+                Skapad av
+            </th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th></th>
+            }
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Name, "Details", new { id = item.TopicId })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                </td>
+                <td>
+                    @item.Comments.Count
+                </td>
+                <td>
+                    @item.Views.Count
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy.UserName)
+
+                </td>
+
+
+
+
+
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.TopicId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.TopicId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.TopicId })
+                    </td>
+                }
+            </tr>
+        }
+
+    </table>*@

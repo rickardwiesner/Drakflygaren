@@ -9,5 +9,7 @@ namespace Drakflygaren.Models
     public class TopicView : TopicAction
     {
         public int Id { get; set; }
+
+      
     }
 }

@@ -59,18 +59,39 @@ namespace Drakflygaren.Controllers
                 TopicId = model.Topic.TopicId,
                 UserId = userId,
                 CommentDateTime = DateTime.Now,
-
+                
             });
 
             db.SaveChanges();
             return RedirectToAction("Details", new { id = model.Topic.TopicId });
+
+
+        }
+
+        [HttpPost]
+        public int TopicLikes(int topicId)
+        {
+            var userId = User.Identity.GetUserId();
+            var userTopicLike = db.TopicLikes.FirstOrDefault(tl => tl.TopicId == topicId && tl.UserId == userId);
+
+            if (userTopicLike == null)
+            {
+                db.TopicLikes.Add(new TopicLike { UserId = userId, TopicId = topicId });
+            }
+            else
+            {
+                db.TopicLikes.Remove(userTopicLike);
+
+            }
+            db.SaveChanges();
+            return 0;
         }
 
         public ActionResult ReportPost(int reportedPostId, ReportCategory reportCategory)
         {       
             var currentUserId = User.Identity.GetUserId();
             var message = string.Empty;
-
+            
             //Bara kolla så att personen inte redan har anmält den här posten
             if (!db.Reports.Any(r => r.CommentId == reportedPostId && r.ReporterId == currentUserId))
             {
@@ -88,7 +109,7 @@ namespace Drakflygaren.Controllers
 
                 db.SaveChanges();
                 message = "Kommentaren har blivit anmäld och kommer att åtgärdas så fort som möjligt";
-            }
+        }
 
             else
             {
