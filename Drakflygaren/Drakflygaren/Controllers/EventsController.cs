@@ -23,7 +23,7 @@ namespace Drakflygaren.Controllers
             var userId = User.Identity.GetUserId();
             var eventViewModels = new List<EventViewModel>();
 
-            foreach (var @event in db.Events.ToList())
+            foreach (var @event in db.Events.ToList())      
             {
                 eventViewModels.Add(new EventViewModel
                 {

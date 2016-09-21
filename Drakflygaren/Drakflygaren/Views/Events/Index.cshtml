@@ -3,20 +3,16 @@
     ViewBag.Title = "Event";
 }
 
-@section scripts {
-    <script src="~/Scripts/events.js"></script>
-}
-
 <h2>@ViewBag.Title</h2>
 @Html.ActionLink("Skapa nytt event", "Create")
 <table class="table table-striped">
     <thead>
-        <tr>
+        <tr>    
             <th>Titel</th>
             <th>Kategori</th>
             <th>Beskrivning</th>
             <th>Plats</th>
-            <th>När?</th>
+            <th>När?</th>       
             <th>Gilla</th>
             <th>Gillare</th>
         </tr>
@@ -35,4 +31,4 @@
             </tr>
         }
     </tbody>
-</table>
+</table>        

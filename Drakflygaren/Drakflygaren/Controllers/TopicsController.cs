@@ -44,25 +44,48 @@ namespace Drakflygaren.Controllers
                 db.SaveChanges();
             }
 
-            return View(new TopicViewModel { Topic = topic});
+            return View(new TopicViewModel { Topic = topic });
         }
         [HttpPost]
         public ActionResult SendPost(TopicViewModel model)
         {
             var userId = User.Identity.GetUserId();
-            db.TopicComments.Add(new TopicComment {
+            db.TopicComments.Add(new TopicComment
+            {
                 Text = model.Text,
                 TopicId = model.Topic.TopicId,
                 UserId = userId,
                 CommentDateTime = DateTime.Now,
-                
-               
+
+
             });
 
             db.SaveChanges();
-            return RedirectToAction("Details", new {id = model.Topic.TopicId});
+            return RedirectToAction("Details", new { id = model.Topic.TopicId });
 
-            
+
+        }
+
+        [HttpPost]
+        public int TopicLikes(int topicId)
+        {
+            var userId = User.Identity.GetUserId();
+            var userTopicLike = db.TopicLikes.FirstOrDefault(tl => tl.TopicId == topicId && tl.UserId == userId);
+
+            if(userTopicLike == null)
+            {
+                db.TopicLikes.Add(new TopicLike { UserId = userId, TopicId = topicId });
+            }
+            else
+            {
+                db.TopicLikes.Remove(userTopicLike);
+                
+            }
+            db.SaveChanges();
+
+            var topicLikesCount = db.Topics.Find(topicId).TopicLikes.Count;
+            return topicLikesCount;
+
         }
 
 
