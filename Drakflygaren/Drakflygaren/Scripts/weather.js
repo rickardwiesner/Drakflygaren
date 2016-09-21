@@ -1,4 +1,5 @@
-﻿var locations = $('.location-row');
+﻿var locations = $('.weather-item');
+//var locations = $('.location-row');
 
 locations.each(function () {
     var location = $(this);

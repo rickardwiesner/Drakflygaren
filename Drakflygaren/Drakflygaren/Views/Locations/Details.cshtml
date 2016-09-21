@@ -5,26 +5,55 @@
 }
 
 <div class="row">
-    <div data-id="@Model.Location.Id" class="@Html.AttributeEncode(Request.IsAuthenticated ? "col-md-9" : "col-md-12" ) location-row">
-        <h2 class="locationName">
-            @ViewBag.Title
+    <div data-id="@Model.Location.Id" class="@Html.AttributeEncode(Request.IsAuthenticated ? "col-md-9" : "col-md-12" ) map-item weather-item">
+        <h2>
+            <span class="locationName">@ViewBag.Title</span>
             @if (Request.IsAuthenticated)
             {
                 <span class="pull-right">
-                    <a id="toggle-favorite"><i class="fa @Html.AttributeEncode(Model.Favorite ? "fa-heart" : "fa-heart-o") text-danger"></i></a>
+                    <a class="toggle-favorite"><i class="fa @Html.AttributeEncode(Model.Favorite ? "fa-heart" : "fa-heart-o") text-danger"></i></a>
                 </span>
             }
         </h2>
         <h4>Stad: <span class="cityName">@Model.Location.City</span></h4>
         <p>Tillagd av: @Model.Location.Creator.UserName</p>
-        <p>Temperatur: <span class="cityTemp"></span> <span>Grader</span></p>
-        <p>Vind: <span class="cityWind"></span> <span>M/s</span></p>
-        <p>Vindriktning: <span class="direction"></span></p>
         <form hidden>
             <input class="cityLong" value="@Model.Location.Longitude" />
             <input class="cityLat" value="@Model.Location.Latitude" />
         </form>
-        <hr />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Väder</th>
+                    <th>&deg;C</th>
+                    <th>Vind m/s</th>
+                    <th>Vindriktning</th>
+                    <th>Betyg</th>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <th>Betygsätt</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img alt="weather" class="weatherIcon" /></td>
+                    <td class="cityTemp"></td>
+                    <td class="cityWind"></td>
+                    <td><span class="fa fa-location-arrow direction"></span></td>
+                    <td class="location-rating">@Model.Rating</td>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <td>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <a data-rating="@i" class="rate-location"><i class="fa @Html.AttributeEncode(Model.UserRating >= i ? "fa-star" : "fa-star-o") text-warning"></i></a>
+                            }
+                        </td>
+                    }
+                </tr>
+            </tbody>
+        </table>
         <div id="map_wrapper">
             <div id="map_canvas" class="mapping"></div>
         </div>
@@ -42,8 +71,8 @@
 </div>
 
 @section scripts {
-<script src="~/Scripts/locations.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>
-<script src="~/Scripts/weather.js"></script>
-<script src="~/Scripts/google-maps.custom.js"></script>
+    <script src="~/Scripts/locations.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>
+    <script src="~/Scripts/weather.js"></script>
+    <script src="~/Scripts/google-maps.custom.js"></script>
 }
