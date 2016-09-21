@@ -23,11 +23,14 @@ namespace Drakflygaren.Models
         //Foreign key
         public string UserId { get; set; }
 
+        public bool Liked { get; set; }
         //Navigational Prop
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser CreatedBy { get; set; }
         public virtual IList<TopicComment> Comments { get; set; }
         public virtual IList<TopicView> Views { get; set; }
+        public virtual IList<TopicLike> TopicLikes { get; set; }
+
     }
 }
