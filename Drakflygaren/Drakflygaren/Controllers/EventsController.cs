@@ -12,11 +12,12 @@ using Drakflygaren.ViewModels;
 
 namespace Drakflygaren.Controllers
 {
+    [Authorize]
     public class EventsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Events
+        [AllowAnonymous]
         public ActionResult Index()
         {
             //   var events = db.Events.Include(@ => @.Category).Include(@ => @.Location);
@@ -57,7 +58,29 @@ namespace Drakflygaren.Controllers
             return eventLikesCount;
         }
 
-        // GET: Events/Details/5
+        [HttpPost]
+        public int EventJoin(int eventId)
+        {
+            var userId = User.Identity.GetUserId();
+            var userEventParticipant = db.EventParticipants.FirstOrDefault(el => el.EventId == eventId && el.UserId == userId);
+
+            if (userEventParticipant == null)
+            {
+                db.EventParticipants.Add(new EventParticipant { UserId = userId, EventId = eventId });
+            }
+
+            else
+            {
+                db.EventParticipants.Remove(userEventParticipant);
+            }
+
+            db.SaveChanges();
+
+            var eventParticipants = db.Events.Find(eventId).Participants.Count;
+            return eventParticipants;
+        }
+
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             var currentUser = User.Identity.GetUserId();
