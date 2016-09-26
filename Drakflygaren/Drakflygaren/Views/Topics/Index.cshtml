@@ -18,16 +18,14 @@
         <tr>
             <th>Namn</th>
             <th>Beskrivning</th>
-            <th>Skapad</th>
+            <th>Senaste inlägget</th>
             <th>Kommentarer</th>
             <th>Visningar</th>
             <th>Skapad av</th>
             <th>Gilla</th>
             <th></th>
-            @if (User.IsInRole("Admin"))
-            {
-            <th>Editera</th>
-            }
+            <th></th>
+
         </tr>
     </thead>
     <tbody>
@@ -38,21 +36,20 @@
             <tr data-id="@topicViewModel.Topic.TopicId">
                 <td>@Html.ActionLink(topicViewModel.Topic.Name, "Details", new { id = topicViewModel.Topic.TopicId })</td>
                 <td>@topicViewModel.Topic.Description</td>
-                <td>@topicViewModel.Topic.CreatedOn</td>
+                <td>@(topicViewModel.Topic.Comments.Any() ? topicViewModel.Topic.Comments.Last().CommentDateTime.ToString() : "-")</td>
                 <td>@topicViewModel.Topic.Comments.Count</td>
                 <td>@topicViewModel.Topic.Views.Count</td>
                 <td>@topicViewModel.Topic.CreatedBy.UserName</td>
                 <td><a class="like-topic-button"><i class="fa @Html.AttributeEncode(topicViewModel.Liked ? "fa-thumbs-up" : "fa-thumbs-o-up")"></i></a></td>
                 <td class="topic-likes-count">@topicViewModel.Topic.TopicLikes.Count</td>
-
-                @if (User.IsInRole("Admin"))
+                <td>
+                    @if (User.IsInRole("Admin") || User.Identity.Name == topicViewModel.Topic.CreatedBy.UserName)
                 {
-                    <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = topicViewModel.Topic.TopicId }) |
-                    @Html.ActionLink("Details", "Details", new { id = topicViewModel.Topic.TopicId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = topicViewModel.Topic.TopicId })
-                    </td>
-                }
+                        @Html.ActionLink("Delete", "Delete", new { id = topicViewModel.Topic.TopicId })
+                    }
+                </td>
+
+            
             </tr>
 
 

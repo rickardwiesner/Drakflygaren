@@ -15,6 +15,9 @@ namespace Drakflygaren.Models
         public bool IsReported { get; set; }
 
         public DateTime CommentDateTime { get; set; }
+
+
+               
         //public string ImageCommentUrl { get; set; } //incase user wishes to comment with an image
     }
 }

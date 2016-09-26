@@ -26,6 +26,9 @@ namespace Drakflygaren.Controllers
             {
                 topicViewModels.Add(GetTopicViewModel(topic));
             }
+            ViewBag.User = User.Identity.Name;
+
+
             return View(topicViewModels);
         }
 
