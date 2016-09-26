@@ -23,8 +23,11 @@
             <th>Kommentarer</th>
             <th>Visningar</th>
             <th>Skapad av</th>
+            @if (User.Identity.IsAuthenticated)
+            {
             <th>Gilla</th>
-            <th></th>
+            }
+            <th><span class="fa fa-thumbs-up"></span></th>
             <th></th>
 
         </tr>
@@ -41,16 +44,20 @@
                 <td>@topicViewModel.Topic.Comments.Count</td>
                 <td>@topicViewModel.Topic.Views.Count</td>
                 <td>@topicViewModel.Topic.CreatedBy.UserName</td>
-                <td><a class="like-topic-button"><i class="fa @Html.AttributeEncode(topicViewModel.Liked ? "fa-thumbs-up" : "fa-thumbs-o-up")"></i></a></td>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <td><a class="like-topic-button"><i class="fa @Html.AttributeEncode(topicViewModel.Liked ? "fa-thumbs-up" : "fa-thumbs-o-up")"></i></a></td>
+                }
                 <td class="topic-likes-count">@topicViewModel.Topic.TopicLikes.Count</td>
                 <td>
                     @if (User.IsInRole("Admin") || User.Identity.Name == topicViewModel.Topic.CreatedBy.UserName)
-                {
+                    {
                         @Html.ActionLink("Delete", "Delete", new { id = topicViewModel.Topic.TopicId })
                     }
                 </td>
 
-            
+
             </tr>
 
 
