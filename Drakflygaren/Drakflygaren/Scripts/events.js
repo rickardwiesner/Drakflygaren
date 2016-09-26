@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     $('.like-event-button').click(function () {
-        var eventId = $(this).parents('tr').attr('data-id');
+        var eventId = $(this).parents('.event-item').attr('data-id');
         $.ajax({
             url: '/Events/EventLike',
             data: { 'eventId': eventId },
@@ -18,7 +18,7 @@
         });
     });
     $('.join-event-button').click(function () {
-        var eventId = $(this).parents('tr').attr('data-id');
+        var eventId = $(this).parents('.event-item').attr('data-id');
         $.ajax({
             url: '/Events/EventJoin',
             data: { 'eventId': eventId },

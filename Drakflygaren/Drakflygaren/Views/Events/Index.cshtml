@@ -32,7 +32,7 @@
     <tbody>
         @foreach (var eventViewModel in Model)
         {
-            <tr data-id="@eventViewModel.Event.EventId">
+            <tr data-id="@eventViewModel.Event.EventId" class="event-item">
                 <td>@Html.ActionLink(eventViewModel.Event.Name, "Details", new { id = eventViewModel.Event.EventId })</td>
                 <td>@eventViewModel.Event.Category.CategoryName</td>
                 <td>@eventViewModel.Event.Description</td>
