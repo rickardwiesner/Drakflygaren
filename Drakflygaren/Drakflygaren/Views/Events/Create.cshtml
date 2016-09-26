@@ -22,7 +22,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.EventDateTime, "När", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EventDateTime, new { htmlAttributes = new { @type = "datetime", @class = "form-control" } })
+                @Html.EditorFor(model => model.EventDateTime, new { htmlAttributes = new { @type = "datetime-local", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.EventDateTime, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -54,13 +54,6 @@
                 @Html.ValidationMessageFor(model => model.EventCategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.CreatorId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CreatorId, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CreatorId, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -73,4 +66,5 @@
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
 }
