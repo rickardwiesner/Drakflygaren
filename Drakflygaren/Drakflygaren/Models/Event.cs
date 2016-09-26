@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,11 @@ namespace Drakflygaren.Models
     public class Event
     {
         public int EventId { get; set; }
+        [DisplayName("Titel")]
         public string Name { get; set; }
         public DateTime EventDateTime { get; set; }
         public string ImageUrl { get; set; }
+        [DisplayName("Beskrivning")]
         public string Description { get; set; }
 
         public int LocationId { get; set; }
