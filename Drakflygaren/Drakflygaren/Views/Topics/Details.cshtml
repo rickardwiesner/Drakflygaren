@@ -23,7 +23,7 @@
                     <li>@Html.ActionLink("Stötande", "ReportPost", new { reportedPostId = comment.Id, reportCategory = ReportCategory.Stötande })</li>
                 </ul>
             </div>
-            <span class="pull-right text-muted">@comment.User.UserName - @comment.CommentDateTime</span>
+            <span class="pull-right text-muted">@comment.User.UserName - @DragonHelper.GetTimeSpan(comment.CommentDateTime)</span>
             <p>@comment.Text</p>
         </div>
     }
