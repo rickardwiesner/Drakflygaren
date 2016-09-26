@@ -28,7 +28,8 @@ textarea {
     background-image: url('../Images/kite_flying.jpg');
     width: 100%;
     background-attachment:fixed;
-    background-size:contain;
+    background-size:cover;
     min-height: 500px;
     color: white;
+    background-repeat: no-repeat;
 }
