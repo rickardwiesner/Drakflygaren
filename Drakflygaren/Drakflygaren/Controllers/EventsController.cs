@@ -17,20 +17,26 @@ namespace Drakflygaren.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        EventViewModel GetEventViewModel(Event @event)
+        {
+            var userId = User.Identity.GetUserId();
+
+            return new EventViewModel
+            {
+                Event = @event,
+                Liked = db.EventLikes.Any(el => el.EventId == @event.EventId && el.UserId == userId),
+                Participating = db.EventParticipants.Any(ep => ep.EventId == @event.EventId && ep.UserId == userId)
+            };
+        }
+
         [AllowAnonymous]
         public ActionResult Index()
         {
-            //   var events = db.Events.Include(@ => @.Category).Include(@ => @.Location);
-            var userId = User.Identity.GetUserId();
             var eventViewModels = new List<EventViewModel>();
 
             foreach (var @event in db.Events.ToList())      
             {
-                eventViewModels.Add(new EventViewModel
-                {
-                    Event = @event,
-                    Liked = db.EventLikes.Any(el => el.EventId == @event.EventId && el.UserId == userId)
-                });
+                eventViewModels.Add(GetEventViewModel(@event));
             }
 
             return View(eventViewModels);
@@ -83,26 +89,19 @@ namespace Drakflygaren.Controllers
         [AllowAnonymous]
         public ActionResult Details(int? id)
         {
-            var currentUser = User.Identity.GetUserId();
-
-            ViewBag.CurrentUser = currentUser;
-            ViewBag.IsAdmin = false;
-
-            if (User.IsInRole("Admin"))
-            {
-                ViewBag.IsAdmin = true;
-            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Event @event = db.Events.Find(id);
+
             if (@event == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ImageUrl = @event.ImageUrl;
-            return View(@event);
+
+            return View(GetEventViewModel(@event));
         }
 
         // GET: Events/Create

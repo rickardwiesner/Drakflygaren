@@ -28,7 +28,8 @@
             },
             success: function (data) {
                 var icon = $('[data-id=' + eventId + '] .join-event-button i.fa');
-                icon.toggleClass('fa-toggle-on fa-toggle-off')
+                icon.toggleClass('fa-user-times fa-user-plus')
+                icon.toggleClass('text-danger text-success')
 
                 var element = $('[data-id=' + eventId + '] .event-participants-count');
                 element.html(data);

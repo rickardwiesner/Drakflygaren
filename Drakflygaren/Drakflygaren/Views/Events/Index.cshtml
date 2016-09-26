@@ -17,8 +17,16 @@
             <th>Beskrivning</th>
             <th>Plats</th>
             <th>När?</th>
-            <th>Gilla</th>
-            <th>Gillare</th>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <th>Gilla</th>
+            }
+            <th><span class="fa fa-thumbs-up"></span></th>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <th>Delta</th>
+            }
+            <th><span class="fa fa-users"></span></th>
         </tr>
     </thead>
     <tbody>
@@ -30,8 +38,16 @@
                 <td>@eventViewModel.Event.Description</td>
                 <td>@eventViewModel.Event.Location.Name</td>
                 <td>@eventViewModel.Event.EventDateTime</td>
-                <td><a class="like-event-button"><i class="fa @Html.AttributeEncode(eventViewModel.Liked ? "fa-thumbs-up" : "fa-thumbs-o-up")"></i></a></td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <td><a class="like-event-button"><i class="fa @Html.AttributeEncode(eventViewModel.Liked ? "fa-thumbs-up" : "fa-thumbs-o-up")"></i></a></td>
+                }
                 <td class="event-likes-count">@eventViewModel.Event.EventLikes.Count</td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <td><a class="join-event-button"><i class="fa @Html.AttributeEncode(eventViewModel.Participating ? "fa-user-times text-danger" : "fa-user-plus text-success")"></i></a></td>
+                }
+                <td class="event-participants-count">@eventViewModel.Event.Participants.Count</td>
             </tr>
         }
     </tbody>
