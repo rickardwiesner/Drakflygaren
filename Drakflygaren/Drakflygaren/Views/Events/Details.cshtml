@@ -1,64 +1,69 @@
-﻿@model Drakflygaren.Models.Event
+﻿@model Drakflygaren.ViewModels.EventViewModel
+
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Event.Name;
 }
-<h2>Details</h2>
-<div>
-    <h4>Event</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Category.CategoryName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Location.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Location.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EventDateTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EventDateTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd>
-            <img src="@Url.Content(ViewBag.ImageUrl)" class="img-responsive" />
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Creator.UserName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Creator.UserName)
-        </dd>
-    </dl>
+
+<div data-id="@Model.Event.EventId" class="row event-item">
+    <div class="col-md-9">
+        <h2>
+            <span class="locationName">@ViewBag.Title</span>
+            @if (Request.IsAuthenticated)
+            {
+                <span class="pull-right">
+                    <a class="like-event-button"><i class="fa @Html.AttributeEncode(Model.Liked ? "fa-thumbs-up" : "fa-thumbs-o-up")"></i></a>
+                </span>
+            }
+        </h2>
+        <h4>Plats: <span class="cityName">@Model.Event.Location.Name</span></h4>
+        <p>Tillagd av: @Model.Event.Creator.UserName</p>
+        <p>@Model.Event.Description</p>
+        <p><span class="fa fa-thumbs-up"></span> <span class="event-likes-count">@Model.Event.EventLikes.Count</span></p>
+        <p><span class="fa fa-users"></span> <span class="event-participants-count">@Model.Event.Participants.Count</span></p>
+        <div id="map_wrapper">
+            <a href="@Url.Content(Model.Event.ImageUrl)"><img src="@Model.Event.ImageUrl" class="img-responsive" style="width:80%; height:100%;" /></a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <h2>
+            Deltagare
+            <span class="pull-right">
+                <a class="join-event-button"><i class="fa @Html.AttributeEncode(Model.Participating ? "fa-user-times text-danger" : "fa-user-plus text-success")"></i></a>               
+            </span>
+        </h2>
+        <div class="list-group">
+            @if (Model.Event.Participants.Count > 0)
+            {
+                foreach (var participant in Model.Event.Participants)
+                {
+
+                    <a data-id="@participant.UserId" href="@Url.Action("#", new { userId = participant.UserId })" class="list-group-item">
+                        <div><strong>@participant.User.UserName</strong><span class="pull-right"></span></div>
+                    </a>
+                }
+            }
+            else
+            {
+                <p>Inga deltagare</p>
+            }
+        </div>
+    </div>
 </div>
 <p>
-    @* Fullösning med <span> här(?) får error med bara | efter sista parantesen.*@
-    @if (ViewBag.CurrentUser == Model.CreatorId || ViewBag.IsAdmin == true)
+    @if (User.Identity.Name == Model.Event.Creator.UserName || User.IsInRole("Admin"))
     {
-        @Html.ActionLink("Ändra", "Edit", new { id = Model.EventId }) 
+        @Html.ActionLink("Ändra", "Edit", new { id = Model.Event.EventId })
         <span> | </span>
-        @Html.ActionLink("Ta bort eventet", "DeleteEvent", new { id = Model.EventId })
+        @Html.ActionLink("Ta bort eventet", "DeleteEvent", new { id = Model.Event.EventId })
+        <span> | </span>
     }
-    <span> | </span>
-    @Html.ActionLink("Back to List", "Index")
+
+    @Html.ActionLink("Tillbaka till listan", "Index")
+
+
 </p>
+
+
+@section scripts {
+    <script src="~/Scripts/events.js"></script>
+}

@@ -12,24 +12,31 @@ using Drakflygaren.ViewModels;
 
 namespace Drakflygaren.Controllers
 {
+    [Authorize]
     public class EventsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Events
+        EventViewModel GetEventViewModel(Event @event)
+        {
+            var userId = User.Identity.GetUserId();
+
+            return new EventViewModel
+            {
+                Event = @event,
+                Liked = db.EventLikes.Any(el => el.EventId == @event.EventId && el.UserId == userId),
+                Participating = db.EventParticipants.Any(ep => ep.EventId == @event.EventId && ep.UserId == userId)
+            };
+        }
+
+        [AllowAnonymous]
         public ActionResult Index()
         {
-            //   var events = db.Events.Include(@ => @.Category).Include(@ => @.Location);
-            var userId = User.Identity.GetUserId();
             var eventViewModels = new List<EventViewModel>();
 
             foreach (var @event in db.Events.ToList())      
             {
-                eventViewModels.Add(new EventViewModel
-                {
-                    Event = @event,
-                    Liked = db.EventLikes.Any(el => el.EventId == @event.EventId && el.UserId == userId)
-                });
+                eventViewModels.Add(GetEventViewModel(@event));
             }
 
             return View(eventViewModels);
@@ -57,29 +64,44 @@ namespace Drakflygaren.Controllers
             return eventLikesCount;
         }
 
-        // GET: Events/Details/5
+        [HttpPost]
+        public int EventJoin(int eventId)
+        {
+            var userId = User.Identity.GetUserId();
+            var userEventParticipant = db.EventParticipants.FirstOrDefault(el => el.EventId == eventId && el.UserId == userId);
+
+            if (userEventParticipant == null)
+            {
+                db.EventParticipants.Add(new EventParticipant { UserId = userId, EventId = eventId });
+            }
+
+            else
+            {
+                db.EventParticipants.Remove(userEventParticipant);
+            }
+
+            db.SaveChanges();
+
+            var eventParticipants = db.Events.Find(eventId).Participants.Count;
+            return eventParticipants;
+        }
+
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
-            var currentUser = User.Identity.GetUserId();
-
-            ViewBag.CurrentUser = currentUser;
-            ViewBag.IsAdmin = false;
-
-            if (User.IsInRole("Admin"))
-            {
-                ViewBag.IsAdmin = true;
-            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Event @event = db.Events.Find(id);
+
             if (@event == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ImageUrl = @event.ImageUrl;
-            return View(@event);
+
+            return View(GetEventViewModel(@event));
         }
 
         // GET: Events/Create

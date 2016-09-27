@@ -12,5 +12,7 @@ namespace Drakflygaren.ViewModels
         public Event Event { get; set; }
 
         public bool Liked { get; set; }
+
+        public bool Participating { get; set; }
     }
 }
