@@ -41,11 +41,22 @@ namespace Drakflygaren.Controllers
         }
         public ActionResult DeleteChoosenComment(int commentId)
         {
-            var choosenComment = context.Reports.Find(commentId);
-           
-            context.Reports.Remove(choosenComment);
+            var choosenReportedComment = context.Reports.Find(commentId);
+            context.Reports.Remove(choosenReportedComment);
+
+            var comment = context.TopicComments.Find(commentId);
+            context.TopicComments.Remove(comment);
+
             context.SaveChanges();
 
+            return RedirectToAction("Index", "Admin");
+        }
+
+        public ActionResult RemoveReportedCommentFromReport(int commentId)
+        {
+            var comment = context.Reports.Find(commentId);
+            context.Reports.Remove(comment);
+            context.SaveChanges();
             return RedirectToAction("Index", "Admin");
         }
     }
