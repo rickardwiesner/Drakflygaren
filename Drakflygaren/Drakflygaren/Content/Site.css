@@ -33,3 +33,7 @@ textarea {
     color: white;
     border-radius: 10px;
 }
+
+#startknapp {
+    float: right;
+}
