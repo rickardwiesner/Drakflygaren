@@ -1,0 +1,36 @@
+﻿@model Drakflygaren.Models.Report
+
+<div>
+    <h4>Report</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Comment.Text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comment.Text)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Reporter.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reporter.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

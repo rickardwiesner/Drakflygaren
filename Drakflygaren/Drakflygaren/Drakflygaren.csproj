@@ -354,6 +354,7 @@
     <Content Include="Views\Locations\Delete.cshtml" />
     <Content Include="Views\Locations\Edit.cshtml" />
     <Content Include="Views\Admin\ReportedComments.cshtml" />
+    <Content Include="Views\Admin\ChoosenComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
