@@ -115,6 +115,8 @@ namespace Drakflygaren.Controllers
         public ActionResult DeleteConfirmed(int locationId)
         {
             Location location = db.Locations.Find(locationId);
+            var locationFavorites = db.LocationFavorites.Where(lf => lf.LocationId == locationId);
+            db.LocationFavorites.RemoveRange(locationFavorites);
             db.Locations.Remove(location);
             db.SaveChanges();
             return RedirectToAction("Index");
