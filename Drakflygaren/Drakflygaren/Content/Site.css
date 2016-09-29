@@ -25,13 +25,17 @@ textarea {
 
 #kite-image {
     margin-top: 50px;
-    background-image: url('../Images/kite_flying.jpg');
+    background-image: url(../Images/Colorful-Kites-Wallpaper.jpg);
     width: 100%;
-    background-attachment: fixed;
+    background-attachment: scroll;
     background-size: cover;
     min-height: 500px;
     color: white;
-    background-repeat: no-repeat;
+    border-radius: 10px;
+}
+
+#startknapp {
+    
 }
 
 .img-profile img {

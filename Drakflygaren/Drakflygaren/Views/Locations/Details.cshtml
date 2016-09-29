@@ -8,6 +8,7 @@
     <div data-id="@Model.Location.Id" class="@Html.AttributeEncode(Request.IsAuthenticated ? "col-md-9" : "col-md-12" ) map-item weather-item">
         <h2>
             <span class="locationName">@ViewBag.Title</span>
+
             @if (Request.IsAuthenticated)
             {
                 <span class="pull-right">
@@ -15,12 +16,22 @@
                 </span>
             }
         </h2>
+
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Redigera", "Edit", new { locationId = Model.Location.Id })
+            <br />
+            @Html.ActionLink("Ta Bort", "Delete", new { locationId = Model.Location.Id })
+        }
+
         <h4>Stad: <span class="cityName">@Model.Location.City</span></h4>
         <p>Tillagd av: @Model.Location.Creator.UserName</p>
         <form hidden>
             <input class="cityLong" value="@Model.Location.Longitude" />
             <input class="cityLat" value="@Model.Location.Latitude" />
+
         </form>
+
         <table class="table">
             <thead>
                 <tr>

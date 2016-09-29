@@ -17,7 +17,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            Namn
         </dt>
 
         <dd>
@@ -25,7 +25,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.City)
+            Stad
         </dt>
 
         <dd>
@@ -53,8 +53,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Ta Bort" class="btn btn-danger" /> |
+            @Html.ActionLink("Tillbaka", "Index")
         </div>
     }
 </div>
