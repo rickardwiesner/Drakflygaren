@@ -38,6 +38,19 @@ textarea {
     
 }
 
+.navbar-nav > li > a {
+    margin-top: 15px;
+}
+
+#user-nav {
+    margin-top: 11.5px;
+}
+
+.img-avatar {
+    width: 30px;
+    height: 30px;
+}
+
 .img-profile img {
     width: 100%;
     height: 160px;

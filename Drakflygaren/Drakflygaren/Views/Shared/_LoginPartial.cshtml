@@ -1,16 +1,16 @@
-﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
+﻿@if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
 
+        if (string.IsNullOrEmpty(ViewBag.ImageUrl))
+        {
+            ViewBag.ImageUrl = "https://www.drupal.org/files/profile_default.jpg";
+        }
     <ul class="nav navbar-nav navbar-right">
-        @*<li>
-            <img class="img-circle img-responsive" src="@ViewBag.ImageUrl" alt="profile pic" />
-        </li>*@
         <li>
-            @Html.ActionLink(User.Identity.GetUserName(), "Details", "Users", routeValues: new { username = User.Identity.Name }, htmlAttributes: new { title = "Manage" })
+            <a id="user-nav" href="@Url.Action("Details", "Users", new { username = User.Identity.Name })" title="Manage"><img class="img-circle img-avatar" src="@ViewBag.ImageUrl" alt="profile pic" /> @User.Identity.Name</a>
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
     </ul>

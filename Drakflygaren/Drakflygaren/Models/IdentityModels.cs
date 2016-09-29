@@ -25,7 +25,7 @@ namespace Drakflygaren.Models
 
         public DateTime DateTimeRegistered { get; set; } = DateTime.Now;
 
-        public string ImageUrl { get; set; } = "https://www.drupal.org/files/profile_default.jpg";
+        public string ImageUrl { get; set; }
 
         public virtual ICollection<EventLike> LikedEvents { get; set; }
 
