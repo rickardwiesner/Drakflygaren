@@ -27,7 +27,15 @@
                     <li>@Html.ActionLink("Event", "Index", "Events")</li>
                     <li>@Html.ActionLink("Forum", "Index", "Topics")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                @if (Request.IsAuthenticated)
+                {
+                    @Html.Action("LoginPartial", "Account")
+                }
+
+                else
+                {
+                    @Html.Partial("_LoginPartial")
+                }
             </div>
         </div>
     </div>

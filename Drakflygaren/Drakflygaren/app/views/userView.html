@@ -1,0 +1,81 @@
+﻿<h4 ng-show="model.successMessage" class="text-success text-center">
+    {{model.successMessage}}
+    <span ng-click="model.successMessage = ''" class="pull-right fa fa-remove text-primary"></span>
+</h4>
+<h4 ng-show="model.errorMessage" class="text-danger text-center">
+    {{model.errorMessage}}
+    <span ng-click="model.errorMessage = ''" class="pull-right fa fa-remove text-primary"></span>
+</h4>
+<div class="panel panel-default panel-profile">
+    <div class="panel-heading">
+        <h4>
+            {{model.user.userName}} <span ng-hide="(model.user.firstName == '' || model.user.firstName == null) && (model.user.lastName == '' || model.user.lastName == null)">-</span> {{ model.user.firstName}} {{model.user.lastName}}
+            <span class="pull-right">
+                <a ng-show="model.user.isUser" href="/Manage/Index"><span class="fa fa-gear"></span></a>
+                <a ng-show="model.user.isAdmin" href="/Admin/ReportedComments"><span class="fa fa-exclamation-triangle text-danger"></span></a>
+            </span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="row row-profile">
+            <div class="col-md-2 img-profile">
+                <div ng-show="model.user.imageUrl != '' && model.user.imageUrl != null">
+                    <img src="{{model.user.imageUrl}}" class="img-circle" alt="profile picture" />
+                </div>
+                <div ng-show="model.user.imageUrl == '' || model.user.imageUrl == null">
+                    <img src="https://www.drupal.org/files/profile_default.jpg" class="img-circle" alt="profile picture" />
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div ng-hide="model.editing">
+                    <h5>Email: {{model.user.email}}</h5>
+                    <h5>Förnamn: {{model.user.firstName}}</h5>
+                    <h5>Efternamn: {{model.user.lastName}}</h5>
+                    <h5>Medlem sedan: {{model.user.dateTimeRegistered | dateFilter | date }}</h5>
+                </div>
+                <button ng-show="!model.editing && model.user.isUser" ng-click="model.startEditing()" class="btn btn-sm btn-primary">Ändra profil</button>
+                <div ng-show="model.editing">
+                    <form>
+                        <div class="form-group">
+                            <input class="form-control input-sm" ng-model="model.user.firstName" placeholder="Förnamn" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control input-sm" ng-model="model.user.lastName" placeholder="Efternamn" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control input-sm" ng-model="model.user.imageUrl" placeholder="Bild URL" />
+                        </div>
+                        <button ng-click="model.saveProfile()" class="btn btn-sm btn-success">Spara</button>
+                        <button ng-click="model.cancelEditing()" class="btn btn-sm btn-warning">Avbryt</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <table class="table table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>Gillade event</th>
+                    <th>Gillade trådar</th>
+                    <th>Favoritplatser</th>
+                    <th>Deltagande i event</th>
+                    <th>Skrivna kommentarer</th>
+                    <th>Trådar skapade</th>
+                    <th>Rankade platser</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{model.user.likedEvents}}</td>
+                    <td>{{model.user.likedTopics}}</td>
+                    <td>{{model.user.favoriteLocations}}</td>
+                    <td>{{model.user.joinedEvents}}</td>
+                    <td>{{model.user.writtenComments}}</td>
+                    <td>{{model.user.topicsCreated}}</td>
+                    <td>{{model.user.ratedLocations}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

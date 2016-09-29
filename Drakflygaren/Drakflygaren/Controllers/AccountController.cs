@@ -23,6 +23,15 @@ namespace Drakflygaren.Controllers
         {
         }
 
+        [ChildActionOnly]
+        public ActionResult LoginPartial()
+        {
+            var user = UserManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            ViewBag.ImageUrl = user.ImageUrl;
+
+            return PartialView("_LoginPartial");
+        }
+
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {

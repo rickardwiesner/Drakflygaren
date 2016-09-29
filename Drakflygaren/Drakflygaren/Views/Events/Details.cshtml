@@ -37,7 +37,7 @@
                 foreach (var participant in Model.Event.Participants)
                 {
 
-                    <a data-id="@participant.UserId" href="@Url.Action("#", new { userId = participant.UserId })" class="list-group-item">
+                    <a data-id="@participant.UserId" href="@Url.Action("Details","Users", new { username = participant.User.UserName })" class="list-group-item">
                         <div><strong>@participant.User.UserName</strong><span class="pull-right"></span></div>
                     </a>
                 }

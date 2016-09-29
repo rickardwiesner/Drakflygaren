@@ -1,0 +1,37 @@
+﻿@model Drakflygaren.Models.ApplicationUser
+
+@*<h3>@Model.UserName</h3>
+    <p>@Model.Email</p>
+    <p>@Model.LikedEvents.Count</p>
+    <p>@Model.LikedTopics.Count</p>
+    <p>@Model.FavoriteLocations.Count</p>
+    <p>@Model.JoinedEvents.Count</p>
+    <p>@Model.WrittenComments.Count</p>
+    <p>@Model.TopicsCreated.Count</p>
+    <p>@Model.RatedLocations.Count</p>*@
+
+
+@*<div ng-app="app">
+    <div ng-view>
+        <div ng-init="model.username = @Model.UserName"></div>
+    </div>
+</div>*@
+
+<div ng-app="app">
+    <div ng-view ng-init="username='@Model.UserName'"></div>
+</div>
+
+
+
+@section scripts {
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angular-resource.min.js"></script>
+
+    <script src="~/app/app.js"></script>
+
+    <script src="~/app/services/commonService.js"></script>
+    <script src="~/app/services/userService.js"></script>
+
+    <script src="~/app/controllers/userController.js"></script>
+}

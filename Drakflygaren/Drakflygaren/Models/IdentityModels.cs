@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System;
 
 namespace Drakflygaren.Models
 {
@@ -17,6 +18,30 @@ namespace Drakflygaren.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public DateTime DateTimeRegistered { get; set; } = DateTime.Now;
+
+        public string ImageUrl { get; set; } = "https://www.drupal.org/files/profile_default.jpg";
+
+        public virtual ICollection<EventLike> LikedEvents { get; set; }
+
+        public virtual ICollection<TopicLike> LikedTopics { get; set; }
+
+        public virtual ICollection<LocationFavorite> FavoriteLocations { get; set; }
+
+        public virtual ICollection<EventParticipant> JoinedEvents { get; set; }
+
+        public virtual ICollection<TopicComment> WrittenComments { get; set; }
+
+        public virtual ICollection<Topic> TopicsCreated { get; set; }
+
+        public virtual ICollection<LocationRating> RatedLocations { get; set; }
+
+        public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
