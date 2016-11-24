@@ -289,7 +289,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\kite_flying.jpg" />
+    <Content Include="Images\3.Altså! Det är faktist KUL.png" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-resource.js" />
     <Content Include="Scripts\angular-resource.min.js" />

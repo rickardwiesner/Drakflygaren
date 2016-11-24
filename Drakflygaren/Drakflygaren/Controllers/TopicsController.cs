@@ -38,7 +38,7 @@ namespace Drakflygaren.Controllers
             bool liked = db.TopicLikes.Any(tl => tl.TopicId == topic.TopicId && tl.UserId == userId);
 
             return new TopicViewModel { Topic = topic, Liked = liked };
-            
+
         }
 
         // GET: Topics/Details/5
@@ -76,7 +76,7 @@ namespace Drakflygaren.Controllers
                 TopicId = model.Topic.TopicId,
                 UserId = userId,
                 CommentDateTime = DateTime.Now,
-                
+
             });
 
             db.SaveChanges();
@@ -106,10 +106,10 @@ namespace Drakflygaren.Controllers
         }
 
         public ActionResult ReportPost(int reportedPostId, ReportCategory reportCategory)
-        {       
+        {
             var currentUserId = User.Identity.GetUserId();
             var message = string.Empty;
-            
+
             //Bara kolla så att personen inte redan har anmält den här posten
             if (!db.Reports.Any(r => r.CommentId == reportedPostId && r.ReporterId == currentUserId))
             {
@@ -127,7 +127,7 @@ namespace Drakflygaren.Controllers
 
                 db.SaveChanges();
                 message = "Kommentaren har blivit anmäld och kommer att åtgärdas så fort som möjligt";
-        }
+            }
 
             else
             {

@@ -7,7 +7,7 @@
         <div class="col-md-4 col-md-offset-8">
             <h1>Välkommen till Drakflygaren!</h1>
             <p class="lead"></p>
-            @if (User.IsInRole("Admin"))
+            @if (!User.Identity.IsAuthenticated)
             {
                 <p><a href="@Url.Action("Register", "Account")" class="btn btn-lg btn-info">Registrera dig idag!</a></p>
                 <p>Är du redan medlem?</p>
